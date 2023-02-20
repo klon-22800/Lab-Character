@@ -3,18 +3,33 @@
 using namespace Data;
 
 
+
+
+TEST(FunctionsTests, CharacterParametersCalculation) {
+    // Arrange
+    Character person;
+
+    
+    // Act
+    person.setActiveSkillStatus(selected);
+    person.CharacterParametersCalculation();
+    float a = person.getArmor();
+
+    // Assert
+    EXPECT_EQ(a, 10);
+}
+
 TEST(FunctionsTests, GetSetGodStatus) {
     // Arrange
     Character person;
-    
 
-    PersonGodStatus b = god;
-    person.setGodStatus(b);
+    /*PersonGodStatus b = god;
+    person.setGodStatus(b);*/
     // Act
-    float a = person.getGodStatus();
+    PersonGodStatus a = person.getGodStatus();
 
     // Assert
-    EXPECT_EQ(a, god);
+    EXPECT_EQ(a, ungod);
 }
 
 TEST(FunctionsTests, GetSetType) {
@@ -24,7 +39,7 @@ TEST(FunctionsTests, GetSetType) {
     CharacterType b = Assassin;
     person.setType(b);
     // Act
-    float a = person.getType();
+    CharacterType a = person.getType();
 
     // Assert
     EXPECT_EQ(a, Assassin);

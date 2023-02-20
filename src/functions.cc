@@ -1,9 +1,21 @@
 #include <functions/functions.h>
 #include <iostream>
-#include <ctime>    
+#include <ctime>   
+#include <stdexcept>
 using namespace Data;
+using namespace std;
 
 
+
+int CharacterList::getSizeArray() {
+    return size;
+}
+
+
+
+void Character::setActiveSkillStatus(ActiveSkillStatus a) {
+    _activeSkillStatus = a;
+}
 void Character::setType(CharacterType a)
 {
     _type = a;
@@ -87,7 +99,7 @@ void Character::CharacterParametersCalculation() {
     case Assassin:
         if (_activeSkillStatus == selected)
         {
-            _godStatus == god;
+            _godStatus = god;
         }
         break;
     case Berserk:
@@ -171,6 +183,31 @@ float Character::DamageTaken(float damageGiven) {
 
     return damageFromOpponent;
 }
+ Character::Character(float hp, float armor, float damage,
+    PersonGodStatus godStatus, ActiveSkillStatus activeSkillStatus, PassiveSkillStatus passiveSkillStatus,
+    CharacterType type, PersonLiveStatus liveStatus) {
+    _hp = hp;
+    _armor = armor;
+    _damage = damage;
+    _godStatus = godStatus;
+    _activeSkillStatus = activeSkillStatus;
+    _passiveSkillStatus = passiveSkillStatus;
+    _type = type;
+    _liveStatus = liveStatus;
+}
+ Character::Character() {
+    _hp = 100;
+    _armor = 5;
+    _damage = 15;
+    _godStatus = ungod;
+    _activeSkillStatus = unselected;
+    _passiveSkillStatus = unactive;
+    _type = Knight;
+    _liveStatus = live;
+}
+
+
+
 int sum_stub(int lhs, int rhs) {
         return lhs + rhs;
     }
