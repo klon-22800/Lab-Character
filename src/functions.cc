@@ -1,210 +1,177 @@
 #include <functions/functions.h>
 #include <iostream>
 #include <ctime>    
+using namespace Data;
 
-enum CharacterType
+
+void Character::setType(CharacterType a)
 {
-    Knight,
-    Assassin,
-    Berserk
-
-};
-enum PersonGodStatus {
-    god,
-    ungod
-};
-enum ActiveSkillStatus {
-    selected,
-    unselected
-};
-enum PassiveSkillStatus {
-    active,
-    unactive
-};
-enum PersonLiveStatus {
-    live,
-    dead
-};
-enum GameStatus {
-    gone,
-    ended
-};
-class BattleField
-{
-public:
-    void MakeStep(Character personX, Character personY, int step)
-    {
-        step = 1;
-        Character attacker;
-        Character defender;
-        GameStatus gameStatus = gone;
-        float damageGiven;
-        float damageTaken;
-        while (gameStatus == gone) {
-            if (step % 2 == 1) {
-                attacker = personX;
-                defender = personY;
-            }
-            else {
-                attacker = personY;
-                defender = personX;
-            }
-            attacker.CharacterParametersCalculation(attacker);
-            defender.CharacterParametersCalculation(defender);
-            damageGiven = attacker.DamageGiven(attacker);
-            damageTaken = defender.DamageTaken(defender, damageGiven);
-            defender.HPCalculation(defender, damageTaken);
-            if (defender.LiveStatusCalculation(defender) == dead) {
-                gameStatus = ended;
-            }
-        }
-    
-    
-    
-    
-    }
-private:
-    int step;
-};
-
-
-class Character 
-{
-public:
-    void PassiveSkillChance(Character person) {
-        srand(time(NULL));
-        int chance = rand() % 10000;
-        switch (person.type)
-        {
-        case Knight:
-            if (person.reduceDamageChanceKnight > chance)
-            {
-                person.passiveSkillStatus = active;
-            }
-            break;
-        case Assassin:
-            if (person.doubleAttackChanceAssassin > chance)
-            {
-                person.passiveSkillStatus = active;
-            }
-            break;
-        case Berserk:
-            if (person.tripleDamgeChanceBerserk > chance)
-            {
-                person.passiveSkillStatus = active;
-                
-            }
-            break;
-
-        }
-
-
-    }
-    float DamageGiven(Character person) 
-    {
-        float damageToOpponent = person.damage;
-        PassiveSkillChance(person);
-        switch (person.type) {
-        case Knight:
-            break;
-        case Assassin:
-
-            break;
-        case Berserk:
-            damageToOpponent = damageToOpponent * 3;
-            break;
-        }
-        return damageToOpponent;
-    }
-    float DamageTaken(Character personX, float damageGiven){
-        PassiveSkillChance(personX);
-        float damageFromOpponent = damageGiven - personX.armor;
-        switch (personX.type) {
-        case Knight:
-            if (personX.passiveSkillStatus == active) {
-                damageFromOpponent = damageFromOpponent / 2;
-            }
-            break;
-        case Assassin:
-            if (personX.godStatus == god) {
-                damageFromOpponent = 0;
-            }
-            break;
-        case Berserk:
-            break;
-        }
-        
-        return damageFromOpponent;
-    }
-    float HPCalculation(Character person, float damageFromOpponent)
-    {
-        person.hp -= damageFromOpponent;
-        return person.hp;
-
-    }
-    PersonLiveStatus LiveStatusCalculation(Character person) {
-        if (person.hp <= 0) {
-            return dead;
-        }
-        else {
-            return live;
-        }
-    }
-    void CharacterParametersCalculation(Character person) {
-        switch (person.type) {
-        case Knight:
-            if (person.activeSkillStatus == selected)
-            {
-                person.armor += 5;
-                person.damage -= 10;
-            }
-            break;
-        case Assassin:
-            if (person.activeSkillStatus == selected)
-            {
-                person.godStatus == god;
-            }
-            break;
-        case Berserk: 
-            if (person.activeSkillStatus == selected)
-            {
-                person.damage += 10;
-                person.tripleDamgeChanceBerserk += 0.2;
-                person.armor -= 10;
-            }
-            break;
-        }
-    }
-    void AssassinSkill(Character person)
-    {
-        person.activeSkillStatus = selected;    
-    }
-    void KnightSkill(Character person)
-    {
-        person.activeSkillStatus = selected;
-    }
-    void BerserkSkill(Character person)
-    {
-        person.activeSkillStatus = selected;
-    }
-    
-private:
-    PersonLiveStatus liveStatus;
-    PersonGodStatus godStatus; 
-    ActiveSkillStatus activeSkillStatus;
-    PassiveSkillStatus passiveSkillStatus;
-    float reduceDamageChanceKnight = 50;
-    float doubleAttackChanceAssassin = 50;
-    float tripleDamgeChanceBerserk = 50;
-    float hp;
-    float armor;
-    float damage;
-    CharacterType type;
-
-
-};
-
-
-int sum_stub(int lhs, int rhs) {
-    return lhs + rhs;
+    _type = a;
 }
+CharacterType Character::getType() {
+    return _type;
+}
+void Character::setDamage(float a)
+{
+
+    _damage = a;
+}
+
+PersonGodStatus Character::getGodStatus() {
+    return _godStatus;
+}
+void Character::setGodStatus(PersonGodStatus a)
+{
+
+    _godStatus = a;
+}
+
+float Character::getDamage() {
+    return _damage;
+}
+void Character::setArmor(float a)
+{
+
+    _armor = a;
+}
+float Character::getArmor() {
+    return _armor;
+}
+
+void Character::setHP(float a)
+{
+
+    _hp = a;
+}
+float Character::getHP() {
+    return _hp;
+}
+
+void Character::setLiveStatus(PersonLiveStatus a)
+{
+
+    _liveStatus = a;
+}
+PersonLiveStatus Character::getLiveStatus() {
+    if (_hp <= 0) {
+        return dead;
+    }
+    else {
+        return live;
+    }
+}
+
+void Character::AssassinSkill()
+{
+    _activeSkillStatus = selected;
+}
+void Character::KnightSkill()
+{
+    _activeSkillStatus = selected;
+}
+void Character::BerserkSkill()
+{
+    _activeSkillStatus = selected;
+}
+
+
+void Character::CharacterParametersCalculation() {
+    switch (_type) {
+    case Knight:
+        if (_activeSkillStatus == selected)
+        {
+            _armor += 5;
+            _damage -= 10;
+        }
+        break;
+    case Assassin:
+        if (_activeSkillStatus == selected)
+        {
+            _godStatus == god;
+        }
+        break;
+    case Berserk:
+        if (_activeSkillStatus == selected)
+        {
+            _damage += 10;
+            _tripleDamgeChanceBerserk += 0.2;
+            _armor -= 10;
+        }
+        break;
+    }
+}
+
+float Character::HPCalculation(float damageFromOpponent)
+{
+    _hp -= damageFromOpponent;
+    return _hp;
+
+}
+
+float Character::DamageGiven() {
+    float damageToOpponent = _damage;
+    //PassiveSkillChance(person);
+    switch (_type) {
+    case Knight:
+        break;
+    case Assassin:
+
+        break;
+    case Berserk:
+        damageToOpponent = damageToOpponent * 3;
+        break;
+    }
+    return damageToOpponent;
+}
+void Character::PassiveSkillChance() {
+    srand(time(NULL));
+    int chance = rand() % 10000;
+    switch (_type)
+    {
+    case Knight:
+        if (_reduceDamageChanceKnight > chance)
+        {
+            _passiveSkillStatus = active;
+        }
+        break;
+    case Assassin:
+        if (_doubleAttackChanceAssassin > chance)
+        {
+            _passiveSkillStatus = active;
+        }
+        break;
+    case Berserk:
+        if (_tripleDamgeChanceBerserk > chance)
+        {
+            _passiveSkillStatus = active;
+
+        }
+        break;
+
+    }
+
+}
+float Character::DamageTaken(float damageGiven) {
+    PassiveSkillChance();
+    float damageFromOpponent = damageGiven - _armor;
+    switch (_type) {
+    case Knight:
+        if (_passiveSkillStatus == active) {
+            damageFromOpponent = damageFromOpponent / 2;
+        }
+        break;
+    case Assassin:
+        if (_godStatus == god) {
+            damageFromOpponent = 0;
+        }
+        break;
+    case Berserk:
+        break;
+    }
+
+    return damageFromOpponent;
+}
+int sum_stub(int lhs, int rhs) {
+        return lhs + rhs;
+    }
+
