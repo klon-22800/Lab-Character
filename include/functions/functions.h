@@ -1,11 +1,12 @@
 #pragma once
 using namespace std;
-namespace Data {
+namespace RPG {
     enum CharacterType
     {
         Knight,
         Assassin,
-        Berserk
+        Berserk,
+        NonType
 
     };
     enum PersonGodStatus {
@@ -34,6 +35,7 @@ namespace Data {
             PersonGodStatus godStatus, ActiveSkillStatus activeSkillStatus, PassiveSkillStatus passiveSkillStatus,
             CharacterType type, PersonLiveStatus liveStatus);
         Character();
+        
         void AssassinSkill();
         void KnightSkill();
         void BerserkSkill();
@@ -81,15 +83,25 @@ namespace Data {
         float _damage;
 
     };
-}
+
     class CharacterList {
     public:
-        static const int size = 10;
-        int getSizeArray();
         
+        int size();
+        CharacterList();
+        Character operator[](int index) const;
+        void add(Character a, int index);
+        int index_of_max_damage();
+        void replace(Character a, int index);
+        void deletePersonFromList(int index);
     private:
-        Character massiv[size]; 
+        static const int CAPACITY = 10;
+        Character Character_array[CAPACITY];
+        int _size;
+        int _countOfPerson = 0;
+        
     };
+}
 
 
 

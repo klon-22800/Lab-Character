@@ -2,76 +2,77 @@
 #include <iostream>
 #include <ctime>   
 #include <stdexcept>
-using namespace Data;
+using namespace RPG;
 using namespace std;
 
+CharacterList::CharacterList() : _size(CAPACITY) {}
 
+void CharacterList::deletePersonFromList(int index) {
+    if (index < 0 || CAPACITY <= index) {
+        throw out_of_range("[FunctionList::operator[]] Index is out of range.");
+    }
+    Character person;
+    Character_array[index] = person;
+    _countOfPerson--;
+}
+int CharacterList::size()  { //ÏÅÐÅÏÈÑÀÒÜ
+    
+    //for (int i = 0; i < CAPACITY; i++) {
+    //    /*if ((Character_array[i].getType() == Assassin) ||
+    //        (Character_array[i].getType() == Knight) ||
+    //        (Character_array[i].getType() == Berserk)) {
+    //        _countOfPerson++;
+    //    } */  
+    //}
+    return _countOfPerson;
+}
+void CharacterList::replace(Character a, int index) {
+    if (index < 0 || CAPACITY <= index) {
+        throw out_of_range("[CharacterList::operator[]] Index is out of range.");
+    }
+    Character_array[index] = a;
 
-int CharacterList::getSizeArray() {
-    return size;
+}
+Character CharacterList::operator[](const int index) const {
+    if (index < 0 || CAPACITY <= index) {
+        throw out_of_range("[CharacterList::operator[]] Index is out of range.");
+    }
+
+    return Character_array[index];
 }
 
-
-
-void Character::setActiveSkillStatus(ActiveSkillStatus a) {
-    _activeSkillStatus = a;
-}
-void Character::setType(CharacterType a)
-{
-    _type = a;
-}
-CharacterType Character::getType() {
-    return _type;
-}
-void Character::setDamage(float a)
-{
-
-    _damage = a;
-}
-
-PersonGodStatus Character::getGodStatus() {
-    return _godStatus;
-}
-void Character::setGodStatus(PersonGodStatus a)
-{
-
-    _godStatus = a;
-}
-
-float Character::getDamage() {
-    return _damage;
-}
-void Character::setArmor(float a)
-{
-
-    _armor = a;
-}
-float Character::getArmor() {
-    return _armor;
-}
-
-void Character::setHP(float a)
-{
-
-    _hp = a;
-}
-float Character::getHP() {
-    return _hp;
-}
-
-void Character::setLiveStatus(PersonLiveStatus a)
-{
-
-    _liveStatus = a;
-}
-PersonLiveStatus Character::getLiveStatus() {
-    if (_hp <= 0) {
-        return dead;
+void CharacterList::add(const Character a, int index) {
+    if (index >= CAPACITY || _countOfPerson >= CAPACITY) {
+        throw runtime_error("[CharacterList::add] Capacity is reached.");
+    }
+    if (Character_array[index].getType() == NonType) {
+        Character_array[index] = a;
+        _countOfPerson++;
+      
     }
     else {
-        return live;
+        int n = size();
+        int i = n - 1;
+        while(i!=index-1) {
+            Character_array[i+1] = Character_array[i];
+            i--;
+        }
+        Character_array[index] = a;
+        _countOfPerson++;
     }
 }
+
+int CharacterList::index_of_max_damage() {
+    int maxDamage = 0; 
+    
+    for (int i = 0; i < _size; ++i) {
+        if (Character_array[i].getDamage() > maxDamage) {
+            maxDamage = Character_array[i].getDamage();
+        }
+    }
+    return maxDamage;
+}
+
 
 void Character::AssassinSkill()
 {
@@ -202,9 +203,10 @@ float Character::DamageTaken(float damageGiven) {
     _godStatus = ungod;
     _activeSkillStatus = unselected;
     _passiveSkillStatus = unactive;
-    _type = Knight;
+    _type = NonType;
     _liveStatus = live;
-}
+} 
+
 
 
 
@@ -212,3 +214,64 @@ int sum_stub(int lhs, int rhs) {
         return lhs + rhs;
     }
 
+
+
+void Character::setActiveSkillStatus(ActiveSkillStatus a) {
+    _activeSkillStatus = a;
+}
+void Character::setType(CharacterType a)
+{
+    _type = a;
+}
+CharacterType Character::getType() {
+    return _type;
+}
+void Character::setDamage(float a)
+{
+
+    _damage = a;
+}
+
+PersonGodStatus Character::getGodStatus() {
+    return _godStatus;
+}
+void Character::setGodStatus(PersonGodStatus a)
+{
+
+    _godStatus = a;
+}
+
+float Character::getDamage() {
+    return _damage;
+}
+void Character::setArmor(float a)
+{
+
+    _armor = a;
+}
+float Character::getArmor() {
+    return _armor;
+}
+
+void Character::setHP(float a)
+{
+
+    _hp = a;
+}
+float Character::getHP() {
+    return _hp;
+}
+
+void Character::setLiveStatus(PersonLiveStatus a)
+{
+
+    _liveStatus = a;
+}
+PersonLiveStatus Character::getLiveStatus() {
+    if (_hp <= 0) {
+        return dead;
+    }
+    else {
+        return live;
+    }
+}
