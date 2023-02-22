@@ -1,78 +1,9 @@
 #include <functions/functions.h>
-#include <iostream>
 #include <ctime>   
 #include <stdexcept>
+
 using namespace RPG;
 using namespace std;
-
-CharacterList::CharacterList() : _size(CAPACITY) {}
-
-void CharacterList::deletePersonFromList(int index) {
-    if (index < 0 || CAPACITY <= index) {
-        throw out_of_range("[FunctionList::operator[]] Index is out of range.");
-    }
-    Character person;
-    Character_array[index] = person;
-    _countOfPerson--;
-}
-int CharacterList::size()  { //ÏÅÐÅÏÈÑÀÒÜ
-    
-    //for (int i = 0; i < CAPACITY; i++) {
-    //    /*if ((Character_array[i].getType() == Assassin) ||
-    //        (Character_array[i].getType() == Knight) ||
-    //        (Character_array[i].getType() == Berserk)) {
-    //        _countOfPerson++;
-    //    } */  
-    //}
-    return _countOfPerson;
-}
-void CharacterList::replace(Character a, int index) {
-    if (index < 0 || CAPACITY <= index) {
-        throw out_of_range("[CharacterList::operator[]] Index is out of range.");
-    }
-    Character_array[index] = a;
-
-}
-Character CharacterList::operator[](const int index) const {
-    if (index < 0 || CAPACITY <= index) {
-        throw out_of_range("[CharacterList::operator[]] Index is out of range.");
-    }
-
-    return Character_array[index];
-}
-
-void CharacterList::add(const Character a, int index) {
-    if (index >= CAPACITY || _countOfPerson >= CAPACITY) {
-        throw runtime_error("[CharacterList::add] Capacity is reached.");
-    }
-    if (Character_array[index].getType() == NonType) {
-        Character_array[index] = a;
-        _countOfPerson++;
-      
-    }
-    else {
-        int n = size();
-        int i = n - 1;
-        while(i!=index-1) {
-            Character_array[i+1] = Character_array[i];
-            i--;
-        }
-        Character_array[index] = a;
-        _countOfPerson++;
-    }
-}
-
-int CharacterList::index_of_max_damage() {
-    int maxDamage = 0; 
-    
-    for (int i = 0; i < _size; ++i) {
-        if (Character_array[i].getDamage() > maxDamage) {
-            maxDamage = Character_array[i].getDamage();
-        }
-    }
-    return maxDamage;
-}
-
 
 void Character::AssassinSkill()
 {
@@ -123,15 +54,17 @@ float Character::HPCalculation(float damageFromOpponent)
 
 float Character::DamageGiven() {
     float damageToOpponent = _damage;
-    //PassiveSkillChance(person);
+    PassiveSkillChance();
     switch (_type) {
     case Knight:
         break;
     case Assassin:
-
+        
         break;
     case Berserk:
-        damageToOpponent = damageToOpponent * 3;
+        if (_passiveSkillStatus == active) {
+            damageToOpponent = damageToOpponent * 3;
+        }
         break;
     }
     return damageToOpponent;
@@ -214,7 +147,9 @@ int sum_stub(int lhs, int rhs) {
         return lhs + rhs;
     }
 
-
+void Character::setPassiveSkillStatus(PassiveSkillStatus a) {
+    _passiveSkillStatus = a;
+}
 
 void Character::setActiveSkillStatus(ActiveSkillStatus a) {
     _activeSkillStatus = a;

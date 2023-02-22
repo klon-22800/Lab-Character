@@ -61,6 +61,7 @@ namespace RPG {
         float getHP();
 
         void setActiveSkillStatus(ActiveSkillStatus a);
+        void setPassiveSkillStatus(PassiveSkillStatus a);
 
         void setLiveStatus(PersonLiveStatus a);
         PersonLiveStatus getLiveStatus();
@@ -90,15 +91,16 @@ namespace RPG {
         int size();
         CharacterList();
         Character operator[](int index) const;
-        void add(Character a, int index);
+        void add(Character a);
         int index_of_max_damage();
-        void replace(Character a, int index);
+        void insert(Character a, int index);
         void deletePersonFromList(int index);
     private:
+        int _countOfPerson = 0;
         static const int CAPACITY = 10;
         Character Character_array[CAPACITY];
-        int _size;
-        int _countOfPerson = 0;
+       // int _size;
+        
         
     };
 }
