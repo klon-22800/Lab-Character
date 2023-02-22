@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <functions/functions.h>
+#include <functions/character_functions.h>
 using namespace std;
 using namespace RPG;
 
@@ -20,8 +20,7 @@ TEST(FunctionsTests, GetSetGodStatus) {
     // Arrange
     Character person;
 
-    /*PersonGodStatus b = god;
-    person.setGodStatus(b);*/
+    
     // Act
     PersonGodStatus a = person.getGodStatus();
 
@@ -92,6 +91,17 @@ TEST(FunctionsTests, DamageGiven) {
 
     // Assert
     EXPECT_NEAR(a, 15, 0.2);
+}
+
+TEST(FunctionsTests, DamageTakenToGod) {
+    // Arrange
+    Character person(100, 5, 10, god, unselected, active, Assassin, live);
+
+    // Act
+    float a = person.DamageTaken(150);
+
+    // Assert
+    EXPECT_NEAR(a, 0, 0.05);
 }
 
 TEST(FunctionsTests, DamageTaken) {

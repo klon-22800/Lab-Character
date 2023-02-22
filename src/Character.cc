@@ -1,4 +1,4 @@
-#include <functions/functions.h>
+#include <functions/character_functions.h>
 #include <ctime>   
 #include <stdexcept>
 

@@ -18,8 +18,8 @@ if(MSVC)
 endif()
 
 # Объявляем библиотеку
-add_library(functions SHARED "include/functions/functions.h" 
-"src/functions.cc"
+add_library(functions SHARED "include/functions/character_functions.h" 
+"src/Character.cc"
 "src/CharacterList.cc"
 )
 target_include_directories(functions PUBLIC "include")
@@ -32,7 +32,7 @@ FetchContent_MakeAvailable(googletest)
 
 # Объявляем тесты
 add_executable(functions_tests 
-"tests/functions_tests.cc"
+"tests/character_tests.cc"
 "tests/character_list_tests.cc"
 
 )

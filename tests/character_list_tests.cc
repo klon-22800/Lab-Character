@@ -1,10 +1,35 @@
 #include <gtest/gtest.h>
 #include <cstdio>
-#include <functions/functions.h>
+#include <functions/character_functions.h>
 using namespace std;
 using namespace RPG;
 
 
+TEST(FunctionsTests, ReachingCapacity) {
+    // Arrange
+    CharacterList personList;
+    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
+    Character person1(100, 10, 100, ungod, selected, active, Assassin, live);
+
+    personList.add(person);
+    personList.add(person);
+    personList.add(person);
+    personList.add(person);
+    personList.add(person);
+
+    personList.add(person);
+    personList.add(person);
+    personList.add(person);
+    personList.add(person);
+    personList.add(person);
+
+    personList.add(person1);
+
+    int a = personList.size();
+
+    // Assert
+    EXPECT_EQ(a, 11);
+}
 
 TEST(FunctionsTests, maxDamage) {
     // Arrange

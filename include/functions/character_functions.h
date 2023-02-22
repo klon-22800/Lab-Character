@@ -90,7 +90,7 @@ namespace RPG {
         
         int size();
         CharacterList();
-        Character operator[](int index) const;
+        Character operator[](const int index) const;
         void add(Character a);
         int index_of_max_damage();
         void insert(Character a, int index);
@@ -98,7 +98,7 @@ namespace RPG {
     private:
         int _countOfPerson = 0;
         static const int CAPACITY = 10;
-        Character Character_array[CAPACITY];
+        Character _ñharacter_array[CAPACITY];
        // int _size;
         
         
