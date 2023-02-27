@@ -3,7 +3,22 @@
 #include <functions/character_functions.h>
 using namespace std;
 using namespace RPG;
+TEST(FunctionsTests, NewInsert) {
+    // Arrange
+    CharacterList personList;
+    Character person(100, 10, 15, ungod, selected, active, Berserk, live);
+    Character person1(100, 10, 100, ungod, selected, active, Assassin, live);
+    
+    personList.add(person);
+    personList.add(person);
+    personList.add(person);
+    personList.insert(person1, 1);
 
+    int a = personList.size();
+
+    // Assert
+    EXPECT_EQ(a, 4);
+}
 
 TEST(FunctionsTests, ReachingCapacity) {
     // Arrange
@@ -28,7 +43,7 @@ TEST(FunctionsTests, ReachingCapacity) {
     int a = personList.size();
 
     // Assert
-    EXPECT_EQ(a, 11);
+    EXPECT_EQ(a, 10);
 }
 
 TEST(FunctionsTests, maxDamage) {
@@ -39,11 +54,13 @@ TEST(FunctionsTests, maxDamage) {
 
     personList.add(person);
     personList.add(person1);
+    personList.add(person);
+    personList.add(person);
 
-    float a = personList.index_of_max_damage();
+    int a = personList.index_of_max_damage();
 
     // Assert
-    EXPECT_EQ(a, 100);
+    EXPECT_EQ(a, 1);
 }
 
 TEST(FunctionsTests, AddingToStrangerPlace) {
@@ -58,7 +75,7 @@ TEST(FunctionsTests, AddingToStrangerPlace) {
     int a = personList.size();
 
     // Assert
-    EXPECT_EQ(a, 1);
+    EXPECT_EQ(a, 2);
 }
 TEST(FunctionsTests, countOfPersonAfterDeleting) {
     // Arrange
@@ -78,13 +95,15 @@ TEST(FunctionsTests, deletePersonFromList) {
     CharacterList personList;
     Character person(100, 10, 15, ungod, selected, active, Assassin, live);
     personList.add(person);
+    personList.add(person);
+    personList.add(person);
+    
+    personList.deletePersonFromList(1);
 
-    personList.deletePersonFromList(0);
-
-    CharacterType a = personList[0].getType();
+    CharacterType a = personList[1].getType();
 
     // Assert
-    EXPECT_EQ(a, NonType);
+    EXPECT_EQ(a, Assassin);
 }
 TEST(FunctionsTests, insertPersonToList) {
     // Arrange
@@ -119,7 +138,7 @@ TEST(FunctionsTests, AddPersonToNOTVoidList) {
     EXPECT_EQ(a, Berserk);
 }
 
-TEST(FunctionsTests, AddPersonToVoidList) {
+TEST(FunctionsTests, InsertPersonToVoidList) {
     // Arrange
     CharacterList personList;
     personList.size();
@@ -128,7 +147,7 @@ TEST(FunctionsTests, AddPersonToVoidList) {
     CharacterType a = personList[5].getType();
 
     // Assert
-    EXPECT_EQ(a, Assassin);
+    EXPECT_EQ(a, NonType);
 }
 
 TEST(FunctionsTests, ListSize) {

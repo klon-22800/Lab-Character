@@ -5,19 +5,12 @@
 using namespace RPG;
 using namespace std;
 
-void Character::AssassinSkill()
-{
-    _activeSkillStatus = selected;
-}
-void Character::KnightSkill()
-{
-    _activeSkillStatus = selected;
-}
-void Character::BerserkSkill()
-{
-    _activeSkillStatus = selected;
-}
 
+
+void Character::PressActiveSkill()
+{
+    _activeSkillStatus = selected;
+}
 
 void Character::CharacterParametersCalculation() {
     switch (_type) {
@@ -53,13 +46,18 @@ float Character::HPCalculation(float damageFromOpponent)
 }
 
 float Character::DamageGiven() {
+    float totalDamage = _damage;
     float damageToOpponent = _damage;
     PassiveSkillChance();
     switch (_type) {
     case Knight:
         break;
     case Assassin:
-        
+        while (_passiveSkillStatus == active) {
+            totalDamage += _damage;
+            PassiveSkillChance();    
+        }
+        damageToOpponent = totalDamage;
         break;
     case Berserk:
         if (_passiveSkillStatus == active) {
@@ -71,7 +69,7 @@ float Character::DamageGiven() {
 }
 void Character::PassiveSkillChance() {
     srand(time(NULL));
-    int chance = rand() % 10000;
+    int chance = rand() % 100 + 1;
     switch (_type)
     {
     case Knight:
@@ -79,11 +77,15 @@ void Character::PassiveSkillChance() {
         {
             _passiveSkillStatus = active;
         }
+        
         break;
     case Assassin:
         if (_doubleAttackChanceAssassin > chance)
         {
             _passiveSkillStatus = active;
+        }
+        else {
+            _passiveSkillStatus = unactive;
         }
         break;
     case Berserk:
@@ -143,9 +145,6 @@ float Character::DamageTaken(float damageGiven) {
 
 
 
-int sum_stub(int lhs, int rhs) {
-        return lhs + rhs;
-    }
 
 void Character::setPassiveSkillStatus(PassiveSkillStatus a) {
     _passiveSkillStatus = a;

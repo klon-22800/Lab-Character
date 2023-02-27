@@ -14,8 +14,16 @@ void CharacterList::deletePersonFromList(int index) {
     if (index < 0 || CAPACITY <= index) {
         throw out_of_range("[FunctionList::operator[]] Index is out of range.");
     }
+    if (_ñharacter_array[index].getType() == NonType) {
+        throw out_of_range("[CharacterList::operator[]] Index is void");
+    }
+
     Character person;
     _ñharacter_array[index] = person;
+    for (int i = index; i != CAPACITY; i++) {
+        _ñharacter_array[i] = _ñharacter_array[i + 1];
+    }
+   // _ñharacter_array[CAPACITY - 1] = person;
     _countOfPerson--;
 }
 int CharacterList::size() { 
@@ -27,10 +35,18 @@ void CharacterList::insert(Character a, int index) {
         throw out_of_range("[CharacterList::operator[]] Index is out of range.");
     }
     if (_ñharacter_array[index].getType() == NonType) {
+        throw out_of_range("[CharacterList::operator[]] Index is void, nothing is happend");
+    }
+    else {
+        for (int i = _countOfPerson - 1; i != index; i--) {
+            _ñharacter_array[i + 1] = _ñharacter_array[i];
+
+        }
+        _ñharacter_array[index] = a;
         _countOfPerson++;
     }
-    _ñharacter_array[index] = a;
 
+    
 }
 Character CharacterList::operator[](const int index) const {
     if (index < 0 || CAPACITY <= index) {
@@ -62,15 +78,14 @@ void CharacterList::add(const Character a) {
     
 }
 
-
-
 int CharacterList::index_of_max_damage() {
     int maxDamage = 0;
-
+    int index = 0;
     for (int i = 0; i < CAPACITY; ++i) {
         if (_ñharacter_array[i].getDamage() > maxDamage) {
             maxDamage = _ñharacter_array[i].getDamage();
+            index = i;
         }
     }
-    return maxDamage;
+    return index;
 }

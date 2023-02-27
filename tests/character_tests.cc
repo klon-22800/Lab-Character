@@ -3,12 +3,14 @@
 using namespace std;
 using namespace RPG;
 
+
+
 TEST(FunctionsTests, CharacterParametersCalculation) {
     // Arrange
     Character person(100, 5, 10, ungod, selected, active, Knight, live);
 
     // Act
-    person.setActiveSkillStatus(selected);
+    person.PressActiveSkill();
     person.CharacterParametersCalculation();
     float a = person.getArmor();
 
@@ -90,8 +92,9 @@ TEST(FunctionsTests, DamageGiven) {
     float a = person.DamageGiven();
 
     // Assert
-    EXPECT_NEAR(a, 15, 0.2);
+    EXPECT_NEAR(a, 15, 0.05);
 }
+
 
 TEST(FunctionsTests, DamageTakenToGod) {
     // Arrange
@@ -153,26 +156,3 @@ TEST(FunctionsTests, GetSetDamage) {
     EXPECT_NEAR(a, 5, 0.2);
 }
 
-TEST(FunctionsTests, SumStubTest1) {
-    // Arrange
-    int lhs = 2;
-    int rhs = 3;
-    
-    // Act
-    int r = sum_stub(lhs, rhs);
-    
-    // Assert
-    EXPECT_EQ(r, 5);
-}
-
-TEST(FunctionsTests, SumStubTest2) {
-    // Arrange
-    int lhs = -1;
-    int rhs = 3;
-    
-    // Act
-    int r = sum_stub(lhs, rhs);
-    
-    // Assert
-    EXPECT_EQ(r, 2);
-}

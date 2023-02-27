@@ -25,10 +25,10 @@ namespace RPG {
         live,
         dead
     };
-    enum GameStatus {
-        gone,
-        ended
-    };
+    //enum GameStatus {
+    //    gone,
+    //    ended
+    //};
     class Character {
     public:
         Character(float hp, float armor, float damage,
@@ -36,10 +36,10 @@ namespace RPG {
             CharacterType type, PersonLiveStatus liveStatus);
         Character();
         
-        void AssassinSkill();
+       /* void AssassinSkill();
         void KnightSkill();
-        void BerserkSkill();
-
+        void BerserkSkill();*/
+        void PressActiveSkill();
 
         float HPCalculation(float damageFromOpponent);
         void CharacterParametersCalculation();
@@ -105,11 +105,4 @@ namespace RPG {
     };
 }
 
-
-
-	
-
-
-
-int sum_stub(int lhs, int rhs);
 
