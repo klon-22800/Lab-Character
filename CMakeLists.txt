@@ -19,8 +19,8 @@ endif()
 
 # Объявляем библиотеку
 add_library(functions SHARED "include/functions/character_functions.h" 
-"src/Character.cc"
-"src/CharacterList.cc"
+"src/character.cc"
+"src/character_list.cc"
 )
 target_include_directories(functions PUBLIC "include")
 

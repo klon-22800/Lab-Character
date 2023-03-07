@@ -2,114 +2,109 @@
 #include <ctime>   
 #include <stdexcept>
 
-using namespace RPG;
+using namespace rpg;
 using namespace std;
 
 
 
-void Character::PressActiveSkill()
+void Character::press_active_skill()
 {
-    _activeSkillStatus = selected;
+    _active_skill_status = selected;
 }
 
-void Character::CharacterParametersCalculation() {
+void Character::character_parametr_calculation() {
     switch (_type) {
     case Knight:
-        if (_activeSkillStatus == selected)
+        if (_active_skill_status == selected)
         {
             _armor += 5;
             _damage -= 10;
         }
         break;
     case Assassin:
-        if (_activeSkillStatus == selected)
+        if (_active_skill_status == selected)
         {
-            _godStatus = god;
+            _god_status = god;
         }
         break;
     case Berserk:
-        if (_activeSkillStatus == selected)
+        if (_active_skill_status == selected)
         {
             _damage += 10;
-            _tripleDamgeChanceBerserk += 0.2;
+            _triple_damage_chance_berserk += 0.2;
             _armor -= 10;
         }
         break;
     }
 }
 
-float Character::HPCalculation(float damageFromOpponent)
+float Character::hp_calculation(float damageFromOpponent)
 {
     _hp -= damageFromOpponent;
     return _hp;
 
 }
 
-float Character::DamageGiven() {
+float Character::damage_given() {
     float totalDamage = _damage;
     float damageToOpponent = _damage;
-    PassiveSkillChance();
+    passive_skill_chance();
     switch (_type) {
     case Knight:
         break;
     case Assassin:
-        while (_passiveSkillStatus == active) {
+        if (_passive_skill_status == active) {
             totalDamage += _damage;
-            PassiveSkillChance();    
         }
         damageToOpponent = totalDamage;
         break;
     case Berserk:
-        if (_passiveSkillStatus == active) {
+        if (_passive_skill_status == active) {
             damageToOpponent = damageToOpponent * 3;
         }
         break;
     }
     return damageToOpponent;
 }
-void Character::PassiveSkillChance() {
+void Character::passive_skill_chance() {
     srand(time(NULL));
     int chance = rand() % 100 + 1;
     switch (_type)
     {
     case Knight:
-        if (_reduceDamageChanceKnight > chance)
+        if (_reduce_damage_chance_knight > chance)
         {
-            _passiveSkillStatus = active;
+            _passive_skill_status = active;
         }
         
         break;
     case Assassin:
-        if (_doubleAttackChanceAssassin > chance)
+        if (_double_attack_chance_assassin > chance)
         {
-            _passiveSkillStatus = active;
-        }
-        else {
-            _passiveSkillStatus = unactive;
+            _passive_skill_status = active;
         }
         break;
     case Berserk:
-        if (_tripleDamgeChanceBerserk > chance)
+        if (_triple_damage_chance_berserk > chance)
         {
-            _passiveSkillStatus = active;
-
+            _passive_skill_status = active;
         }
         break;
 
     }
 
 }
-float Character::DamageTaken(float damageGiven) {
-    PassiveSkillChance();
-    float damageFromOpponent = damageGiven - _armor;
+float Character::damage_taken(float damage_given) {
+    passive_skill_chance();
+    float damageFromOpponent = damage_given - _armor;
     switch (_type) {
     case Knight:
-        if (_passiveSkillStatus == active) {
+        if (_passive_skill_status == active) {
             damageFromOpponent = damageFromOpponent / 2;
         }
         break;
     case Assassin:
-        if (_godStatus == god) {
+        if (_god_status == god) {
             damageFromOpponent = 0;
         }
         break;
@@ -125,83 +120,83 @@ float Character::DamageTaken(float damageGiven) {
     _hp = hp;
     _armor = armor;
     _damage = damage;
-    _godStatus = godStatus;
-    _activeSkillStatus = activeSkillStatus;
-    _passiveSkillStatus = passiveSkillStatus;
+    _god_status = godStatus;
+    _active_skill_status = activeSkillStatus;
+    _passive_skill_status = passiveSkillStatus;
     _type = type;
-    _liveStatus = liveStatus;
+    _live_status = liveStatus;
 }
  Character::Character() {
     _hp = 100;
     _armor = 5;
     _damage = 15;
-    _godStatus = ungod;
-    _activeSkillStatus = unselected;
-    _passiveSkillStatus = unactive;
+    _god_status = ungod;
+    _active_skill_status = unselected;
+    _passive_skill_status = unactive;
     _type = NonType;
-    _liveStatus = live;
+    _live_status = live;
 } 
 
 
 
 
 
-void Character::setPassiveSkillStatus(PassiveSkillStatus a) {
-    _passiveSkillStatus = a;
+void Character::set_passive_skill_status(PassiveSkillStatus a) {
+    _passive_skill_status = a;
 }
 
-void Character::setActiveSkillStatus(ActiveSkillStatus a) {
-    _activeSkillStatus = a;
+void Character::set_active_skill_status(ActiveSkillStatus a) {
+    _active_skill_status = a;
 }
-void Character::setType(CharacterType a)
+void Character::set_type(CharacterType a)
 {
     _type = a;
 }
-CharacterType Character::getType() {
+CharacterType Character::get_type() {
     return _type;
 }
-void Character::setDamage(float a)
+void Character::set_damage(float a)
 {
 
     _damage = a;
 }
 
-PersonGodStatus Character::getGodStatus() {
-    return _godStatus;
+PersonGodStatus Character::get_god_status() {
+    return _god_status;
 }
-void Character::setGodStatus(PersonGodStatus a)
+void Character::set_god_status(PersonGodStatus a)
 {
 
-    _godStatus = a;
+    _god_status = a;
 }
 
-float Character::getDamage() {
+float Character::get_damage() {
     return _damage;
 }
-void Character::setArmor(float a)
+void Character::set_armor(float a)
 {
 
     _armor = a;
 }
-float Character::getArmor() {
+float Character::get_armor() {
     return _armor;
 }
 
-void Character::setHP(float a)
+void Character::set_hp(float a)
 {
 
     _hp = a;
 }
-float Character::getHP() {
+float Character::get_hp() {
     return _hp;
 }
 
-void Character::setLiveStatus(PersonLiveStatus a)
+void Character::set_live_status(PersonLiveStatus a)
 {
 
-    _liveStatus = a;
+    _live_status = a;
 }
-PersonLiveStatus Character::getLiveStatus() {
+PersonLiveStatus Character::get_live_status() {
     if (_hp <= 0) {
         return dead;
     }

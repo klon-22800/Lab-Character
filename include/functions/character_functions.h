@@ -1,6 +1,6 @@
 #pragma once
 using namespace std;
-namespace RPG {
+namespace rpg {
     enum CharacterType
     {
         Knight,
@@ -39,46 +39,46 @@ namespace RPG {
        /* void AssassinSkill();
         void KnightSkill();
         void BerserkSkill();*/
-        void PressActiveSkill();
+        void press_active_skill();
 
-        float HPCalculation(float damageFromOpponent);
-        void CharacterParametersCalculation();
-        void PassiveSkillChance();
+        float hp_calculation(float damageFromOpponent);
+        void character_parametr_calculation();
+        void passive_skill_chance();
 
-        float DamageTaken(float damageGiven);
-        float DamageGiven();
+        float damage_taken(float damage_given);
+        float damage_given();
 
-        CharacterType getType();
-        void setType(CharacterType a);
+        CharacterType get_type();
+        void set_type(CharacterType a);
 
-        void setDamage(float a);
-        float getDamage();
+        void set_damage(float a);
+        float get_damage();
 
-        void setArmor(float a);
-        float getArmor();
+        void set_armor(float a);
+        float get_armor();
 
-        void setHP(float a);
-        float getHP();
+        void set_hp(float a);
+        float get_hp();
 
-        void setActiveSkillStatus(ActiveSkillStatus a);
-        void setPassiveSkillStatus(PassiveSkillStatus a);
+        void set_active_skill_status(ActiveSkillStatus a);
+        void set_passive_skill_status(PassiveSkillStatus a);
 
-        void setLiveStatus(PersonLiveStatus a);
-        PersonLiveStatus getLiveStatus();
+        void set_live_status(PersonLiveStatus a);
+        PersonLiveStatus get_live_status();
 
-        void setGodStatus(PersonGodStatus a);
-        PersonGodStatus getGodStatus();
+        void set_god_status(PersonGodStatus a);
+        PersonGodStatus get_god_status();
     private:
 
-        PersonGodStatus _godStatus;
-        ActiveSkillStatus _activeSkillStatus;
-        PassiveSkillStatus _passiveSkillStatus;
+        PersonGodStatus _god_status;
+        ActiveSkillStatus _active_skill_status;
+        PassiveSkillStatus _passive_skill_status;
 
         CharacterType _type;
-        PersonLiveStatus _liveStatus;
-        float _reduceDamageChanceKnight = 50;
-        float _doubleAttackChanceAssassin = 50;
-        float _tripleDamgeChanceBerserk = 50;
+        PersonLiveStatus _live_status;
+        float _reduce_damage_chance_knight = 50;
+        float _double_attack_chance_assassin = 50;
+        float _triple_damage_chance_berserk = 50;
         float _hp;
         float _armor;
         float _damage;
@@ -94,7 +94,7 @@ namespace RPG {
         void add(Character a);
         int index_of_max_damage();
         void insert(Character a, int index);
-        void deletePersonFromList(int index);
+        void delete_person_from_list(int index);
     private:
         int _countOfPerson = 0;
         static const int CAPACITY = 10;

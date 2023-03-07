@@ -1,156 +1,156 @@
 #include <gtest/gtest.h>
 #include <functions/character_functions.h>
 using namespace std;
-using namespace RPG;
+using namespace rpg;
 
 
 
-TEST(FunctionsTests, CharacterParametersCalculation) {
+TEST(FunctionsTests, character_parametr_calculation) {
     // Arrange
     Character person(100, 5, 10, ungod, selected, active, Knight, live);
 
     // Act
-    person.PressActiveSkill();
-    person.CharacterParametersCalculation();
-    float a = person.getArmor();
+    person.press_active_skill();
+    person.character_parametr_calculation();
+    float a = person.get_armor();
 
     // Assert
     EXPECT_EQ(a, 10);
 }
 
-TEST(FunctionsTests, GetSetGodStatus) {
+TEST(FunctionsTests, Getset_god_status) {
     // Arrange
     Character person;
 
     
     // Act
-    PersonGodStatus a = person.getGodStatus();
+    PersonGodStatus a = person.get_god_status();
 
     // Assert
     EXPECT_EQ(a, ungod);
 }
 
-TEST(FunctionsTests, GetSetType) {
+TEST(FunctionsTests, Getset_type) {
     // Arrange
     Character person;
 
     CharacterType b = Assassin;
-    person.setType(b);
+    person.set_type(b);
     // Act
-    CharacterType a = person.getType();
+    CharacterType a = person.get_type();
 
     // Assert
     EXPECT_EQ(a, Assassin);
 }
-TEST(FunctionsTests, GetSetLiveStatusPositive) {
+TEST(FunctionsTests, Getset_live_statusPositive) {
     // Arrange
     Character person;
 
     
-    person.setHP(5);
+    person.set_hp(5);
     // Act
-    PersonLiveStatus a = person.getLiveStatus();
+    PersonLiveStatus a = person.get_live_status();
 
     // Assert
     EXPECT_EQ(a, live);
 }
 
-TEST(FunctionsTests, GetSetLiveStatusNegative) {
+TEST(FunctionsTests, Getset_live_statusNegative) {
     // Arrange
     Character person;
 
-    person.setHP(-5);
+    person.set_hp(-5);
     // Act
-    PersonLiveStatus a = person.getLiveStatus();
+    PersonLiveStatus a = person.get_live_status();
 
     // Assert
     EXPECT_EQ(a, dead);
 }
 
-TEST(FunctionsTests, HPCalculation) {
+TEST(FunctionsTests, hp_calculation) {
     // Arrange
     Character person;
 
     float b = 5;
-    person.setHP(b);
+    person.set_hp(b);
     // Act
-    float a = person.HPCalculation(3);
+    float a = person.hp_calculation(3);
 
     // Assert
     EXPECT_EQ(a, 2);
 }
 
-TEST(FunctionsTests, DamageGiven) {
+TEST(FunctionsTests, damage_given) {
     // Arrange
     Character person;
 
     float b = 5;
-    person.setDamage(b);
-    person.setType(Berserk);
-    person.setPassiveSkillStatus(active);
+    person.set_damage(b);
+    person.set_type(Berserk);
+    person.set_passive_skill_status(active);
     // Act
-    float a = person.DamageGiven();
+    float a = person.damage_given();
 
     // Assert
     EXPECT_NEAR(a, 15, 0.05);
 }
 
 
-TEST(FunctionsTests, DamageTakenToGod) {
+TEST(FunctionsTests, damage_takenToGod) {
     // Arrange
     Character person(100, 5, 10, god, unselected, active, Assassin, live);
 
     // Act
-    float a = person.DamageTaken(150);
+    float a = person.damage_taken(150);
 
     // Assert
     EXPECT_NEAR(a, 0, 0.05);
 }
 
-TEST(FunctionsTests, DamageTaken) {
+TEST(FunctionsTests, damage_taken) {
     // Arrange
     Character person(100, 5, 10, ungod, unselected, active, Knight, live);
 
     // Act
-    float a = person.DamageTaken(15);
+    float a = person.damage_taken(15);
 
     // Assert
     EXPECT_NEAR(a, 5, 0.2);
 }
 
-TEST(FunctionsTests, GetSetArmor) {
+TEST(FunctionsTests, Getset_armor) {
     // Arrange
     Character person;
 
     float b = 5;
-    person.setArmor(b);
+    person.set_armor(b);
     // Act
-    float a = person.getArmor();
+    float a = person.get_armor();
 
     // Assert
     EXPECT_NEAR(a, 5, 0.2);
 }
-TEST(FunctionsTests, GetSetHP) {
+TEST(FunctionsTests, Getset_hp) {
     // Arrange
     Character person;
 
     float b = 5;
-    person.setHP(b);
+    person.set_hp(b);
     // Act
-    float a = person.getHP();
+    float a = person.get_hp();
 
     // Assert
     EXPECT_NEAR(a, 5, 0.2);
 }
 
-TEST(FunctionsTests, GetSetDamage) {
+TEST(FunctionsTests, Getset_damage) {
     // Arrange
     Character person;
     
     float b = 5;
-    person.setDamage(b);
+    person.set_damage(b);
     // Act
-    float a  = person.getDamage();
+    float a  = person.get_damage();
 
     // Assert
     EXPECT_NEAR(a, 5, 0.2);

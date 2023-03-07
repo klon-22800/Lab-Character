@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <functions/character_functions.h>
 using namespace std;
-using namespace RPG;
+using namespace rpg;
 TEST(FunctionsTests, NewInsert) {
     // Arrange
     CharacterList personList;
@@ -70,7 +70,7 @@ TEST(FunctionsTests, AddingToStrangerPlace) {
     personList.add(person);
     personList.add(person);
     personList.insert(person, 1);
-    personList.deletePersonFromList(1);
+    personList.delete_person_from_list(1);
 
     int a = personList.size();
 
@@ -83,14 +83,14 @@ TEST(FunctionsTests, countOfPersonAfterDeleting) {
     Character person(100, 10, 15, ungod, selected, active, Assassin, live);
     personList.add(person);
 
-    personList.deletePersonFromList(0);
+    personList.delete_person_from_list(0);
 
     int a = personList.size();
 
     // Assert
     EXPECT_EQ(a, 0);
 }
-TEST(FunctionsTests, deletePersonFromList) {
+TEST(FunctionsTests, delete_person_from_list) {
     // Arrange
     CharacterList personList;
     Character person(100, 10, 15, ungod, selected, active, Assassin, live);
@@ -98,9 +98,9 @@ TEST(FunctionsTests, deletePersonFromList) {
     personList.add(person);
     personList.add(person);
     
-    personList.deletePersonFromList(1);
+    personList.delete_person_from_list(1);
 
-    CharacterType a = personList[1].getType();
+    CharacterType a = personList[1].get_type();
 
     // Assert
     EXPECT_EQ(a, Assassin);
@@ -113,7 +113,7 @@ TEST(FunctionsTests, insertPersonToList) {
     personList.add(person);
     personList.insert(personTEST, 0);
 
-    CharacterType a = personList[0].getType();
+    CharacterType a = personList[0].get_type();
 
     // Assert
     EXPECT_EQ(a, Berserk);
@@ -132,7 +132,7 @@ TEST(FunctionsTests, AddPersonToNOTVoidList) {
     personList.add(person);
     personList.add(personTEST);
 
-    CharacterType a = personList[6].getType();
+    CharacterType a = personList[6].get_type();
 
     // Assert
     EXPECT_EQ(a, Berserk);
@@ -144,7 +144,7 @@ TEST(FunctionsTests, InsertPersonToVoidList) {
     personList.size();
     Character person(100, 10, 15, ungod, selected, active, Assassin, live);
     personList.insert(person, 5);
-    CharacterType a = personList[5].getType();
+    CharacterType a = personList[5].get_type();
 
     // Assert
     EXPECT_EQ(a, NonType);
