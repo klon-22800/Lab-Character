@@ -3,28 +3,65 @@
 using namespace std;
 using namespace rpg;
 
+TEST(FunctionsTests, TestOperatorComprasionFALSE) {
+    // Arrange
+    Character person;
+    CharacterList list;
+    const auto ptr1 = person.create_person(Assassin);
+    const auto ptr2 = person.create_person(Berserk);
+    list.add(ptr1);
+    list.add(ptr2);
+    bool a = *list[0] == *list[1];
 
+    // Assert
+    EXPECT_EQ(a, false);
+}
+TEST(FunctionsTests, TestOperatorComprasionTRUE) {
+    // Arrange
+    Character person;
+    CharacterList list;
+    const auto ptr1 = person.create_person(Assassin);
+    const auto ptr2 = person.create_person(Assassin);
+    list.add(ptr1);
+    list.add(ptr2);
+    bool a = *list[0] == *list[1];
+
+    // Assert
+    EXPECT_EQ(a, true);
+}
+
+TEST(FunctionsTests, create_person) {
+    // Arrange
+    Character person;
+    const auto ptr = person.create_person(Assassin);
+    auto a = (*ptr).get_type();
+
+    // Assert
+    EXPECT_EQ(a, Assassin);
+}
 
 TEST(FunctionsTests, character_parametr_calculation) {
     // Arrange
-    Character person(100, 5, 10, ungod, selected, active, Knight, live);
+    Character person;
+    const auto ptr = person.create_person(Assassin);
 
     // Act
-    person.press_active_skill();
-    person.character_parametr_calculation();
-    float a = person.get_armor();
+    (*ptr).press_active_skill();
+    (*ptr).character_parametr_calculation();
+    float a = (*ptr).get_armor();
 
     // Assert
-    EXPECT_EQ(a, 10);
+    EXPECT_EQ(a, 5);
 }
 
 TEST(FunctionsTests, Getset_god_status) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
     
     // Act
-    PersonGodStatus a = person.get_god_status();
+    PersonGodStatus a = (*ptr).get_god_status();
 
     // Assert
     EXPECT_EQ(a, ungod);
@@ -33,11 +70,12 @@ TEST(FunctionsTests, Getset_god_status) {
 TEST(FunctionsTests, Getset_type) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
     CharacterType b = Assassin;
-    person.set_type(b);
+    (*ptr).set_type(b);
     // Act
-    CharacterType a = person.get_type();
+    CharacterType a = (*ptr).get_type();
 
     // Assert
     EXPECT_EQ(a, Assassin);
@@ -45,11 +83,12 @@ TEST(FunctionsTests, Getset_type) {
 TEST(FunctionsTests, Getset_live_statusPositive) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
     
-    person.set_hp(5);
+    (*ptr).set_hp(5);
     // Act
-    PersonLiveStatus a = person.get_live_status();
+    PersonLiveStatus a = (*ptr).get_live_status();
 
     // Assert
     EXPECT_EQ(a, live);
@@ -58,10 +97,11 @@ TEST(FunctionsTests, Getset_live_statusPositive) {
 TEST(FunctionsTests, Getset_live_statusNegative) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
-    person.set_hp(-5);
+    (*ptr).set_hp(-5);
     // Act
-    PersonLiveStatus a = person.get_live_status();
+    PersonLiveStatus a = (*ptr).get_live_status();
 
     // Assert
     EXPECT_EQ(a, dead);
@@ -70,11 +110,12 @@ TEST(FunctionsTests, Getset_live_statusNegative) {
 TEST(FunctionsTests, hp_calculation) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
     float b = 5;
-    person.set_hp(b);
+    (*ptr).set_hp(b);
     // Act
-    float a = person.hp_calculation(3);
+    float a = (*ptr).hp_calculation(3);
 
     // Assert
     EXPECT_EQ(a, 2);
@@ -83,13 +124,14 @@ TEST(FunctionsTests, hp_calculation) {
 TEST(FunctionsTests, damage_given) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
     float b = 5;
-    person.set_damage(b);
-    person.set_type(Berserk);
-    person.set_passive_skill_status(active);
+    (*ptr).set_damage(b);
+    (*ptr).set_type(Berserk);
+    (*ptr).set_passive_skill_status(active);
     // Act
-    float a = person.damage_given();
+    float a = (*ptr).damage_given();
 
     // Assert
     EXPECT_NEAR(a, 15, 0.05);
@@ -98,10 +140,14 @@ TEST(FunctionsTests, damage_given) {
 
 TEST(FunctionsTests, damage_takenToGod) {
     // Arrange
-    Character person(100, 5, 10, god, unselected, active, Assassin, live);
+    
+    Character person;
+    const auto ptr = person.create_person(Assassin);
+    (*ptr).set_active_skill_status(selected);
+    (*ptr).character_parametr_calculation();
 
     // Act
-    float a = person.damage_taken(150);
+    float a = (*ptr).damage_taken(150);
 
     // Assert
     EXPECT_NEAR(a, 0, 0.05);
@@ -109,23 +155,25 @@ TEST(FunctionsTests, damage_takenToGod) {
 
 TEST(FunctionsTests, damage_taken) {
     // Arrange
-    Character person(100, 5, 10, ungod, unselected, active, Knight, live);
+    Character person;
+    const auto ptr = person.create_person(Assassin);
 
     // Act
-    float a = person.damage_taken(15);
+    float a = (*ptr).damage_taken(15);
 
     // Assert
-    EXPECT_NEAR(a, 5, 0.2);
+    EXPECT_NEAR(a, 10, 0.2);
 }
 
 TEST(FunctionsTests, Getset_armor) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
     float b = 5;
-    person.set_armor(b);
+    (*ptr).set_armor(b);
     // Act
-    float a = person.get_armor();
+    float a = (*ptr).get_armor();
 
     // Assert
     EXPECT_NEAR(a, 5, 0.2);
@@ -133,11 +181,12 @@ TEST(FunctionsTests, Getset_armor) {
 TEST(FunctionsTests, Getset_hp) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
 
     float b = 5;
-    person.set_hp(b);
+    (*ptr).set_hp(b);
     // Act
-    float a = person.get_hp();
+    float a = (*ptr).get_hp();
 
     // Assert
     EXPECT_NEAR(a, 5, 0.2);
@@ -146,11 +195,12 @@ TEST(FunctionsTests, Getset_hp) {
 TEST(FunctionsTests, Getset_damage) {
     // Arrange
     Character person;
+    const auto ptr = person.create_person(Assassin);
     
     float b = 5;
-    person.set_damage(b);
+    (*ptr).set_damage(b);
     // Act
-    float a  = person.get_damage();
+    float a  = (*ptr).get_damage();
 
     // Assert
     EXPECT_NEAR(a, 5, 0.2);

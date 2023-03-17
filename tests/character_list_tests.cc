@@ -6,56 +6,28 @@ using namespace rpg;
 TEST(FunctionsTests, NewInsert) {
     // Arrange
     CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Berserk, live);
-    Character person1(100, 10, 100, ungod, selected, active, Assassin, live);
+    Character person;
     
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.insert(person1, 1);
+    
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
 
     int a = personList.size();
 
     // Assert
-    EXPECT_EQ(a, 4);
-}
-
-TEST(FunctionsTests, ReachingCapacity) {
-    // Arrange
-    CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    Character person1(100, 10, 100, ungod, selected, active, Assassin, live);
-
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-
-    personList.add(person1);
-
-    int a = personList.size();
-
-    // Assert
-    EXPECT_EQ(a, 10);
+    EXPECT_EQ(a, 3);
 }
 
 TEST(FunctionsTests, maxDamage) {
     // Arrange
     CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    Character person1(100, 10, 100, ungod, selected, active, Assassin, live);
+    Character person;
 
-    personList.add(person);
-    personList.add(person1);
-    personList.add(person);
-    personList.add(person);
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Berserk));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
 
     int a = personList.index_of_max_damage();
 
@@ -66,10 +38,13 @@ TEST(FunctionsTests, maxDamage) {
 TEST(FunctionsTests, AddingToStrangerPlace) {
     // Arrange
     CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    personList.add(person);
-    personList.add(person);
-    personList.insert(person, 1);
+    Character person;
+    const auto ptr1 = person.create_person(Assassin);
+    const auto ptr2 = person.create_person(Assassin);
+    const auto ptr3 = person.create_person(Assassin);
+    personList.add(ptr1);
+    personList.add(ptr2);
+    personList.insert(ptr3, 1);
     personList.delete_person_from_list(1);
 
     int a = personList.size();
@@ -80,8 +55,9 @@ TEST(FunctionsTests, AddingToStrangerPlace) {
 TEST(FunctionsTests, countOfPersonAfterDeleting) {
     // Arrange
     CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    personList.add(person);
+    Character person;
+    const auto ptr = person.create_person(Assassin);
+    personList.add(ptr);
 
     personList.delete_person_from_list(0);
 
@@ -93,14 +69,17 @@ TEST(FunctionsTests, countOfPersonAfterDeleting) {
 TEST(FunctionsTests, delete_person_from_list) {
     // Arrange
     CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
+    Character person;
+    const auto ptr1 = person.create_person(Assassin);
+    const auto ptr2 = person.create_person(Assassin);
+    const auto ptr3 = person.create_person(Assassin);
+    personList.add(ptr1);
+    personList.add(ptr2);
+    personList.add(ptr3);
     
     personList.delete_person_from_list(1);
 
-    CharacterType a = personList[1].get_type();
+    CharacterType a = (*personList[1]).get_type();
 
     // Assert
     EXPECT_EQ(a, Assassin);
@@ -108,60 +87,32 @@ TEST(FunctionsTests, delete_person_from_list) {
 TEST(FunctionsTests, insertPersonToList) {
     // Arrange
     CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    Character personTEST(100, 10, 15, ungod, selected, active, Berserk, live);
-    personList.add(person);
-    personList.insert(personTEST, 0);
+    Character person;
+    Character person2;
+    const auto ptr = person.create_person(Assassin);
+    const auto ptr2 = person2.create_person(Berserk);
+    personList.add(ptr);
+    personList.insert(ptr2, 0);
 
-    CharacterType a = personList[0].get_type();
-
-    // Assert
-    EXPECT_EQ(a, Berserk);
-}
-
-TEST(FunctionsTests, AddPersonToNOTVoidList) {
-    // Arrange
-    CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    Character personTEST(100, 10, 15, ungod, selected, active, Berserk, live);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(personTEST);
-
-    CharacterType a = personList[6].get_type();
+    CharacterType a = (*personList[0]).get_type();
 
     // Assert
     EXPECT_EQ(a, Berserk);
-}
-
-TEST(FunctionsTests, InsertPersonToVoidList) {
-    // Arrange
-    CharacterList personList;
-    personList.size();
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    personList.insert(person, 5);
-    CharacterType a = personList[5].get_type();
-
-    // Assert
-    EXPECT_EQ(a, NonType);
 }
 
 TEST(FunctionsTests, ListSize) {
     // Arrange
     CharacterList personList;
-    Character person(100, 10, 15, ungod, selected, active, Assassin, live);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
-    personList.add(person);
+    Character person;
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    personList.add(person.create_person(Assassin));
+    
 
     int a = personList.size();
 

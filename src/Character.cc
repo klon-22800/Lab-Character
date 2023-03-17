@@ -6,6 +6,63 @@ using namespace rpg;
 using namespace std;
 
 
+Character::Character(float hp, float armor, float damage,
+    PersonGodStatus godStatus, ActiveSkillStatus activeSkillStatus, PassiveSkillStatus passiveSkillStatus,
+    CharacterType type, PersonLiveStatus liveStatus) {
+    _hp = hp;
+    _armor = armor;
+    _damage = damage;
+    _god_status = godStatus;
+    _active_skill_status = activeSkillStatus;
+    _passive_skill_status = passiveSkillStatus;
+    _type = type;
+    _live_status = liveStatus;
+}
+Character::Character() {
+    _hp = 0;
+    _armor = 0;
+    _damage = 0;
+    _god_status = ungod;
+    _active_skill_status = unselected;
+    _passive_skill_status = unactive;
+    _type = NonType;
+    _live_status = dead;
+}
+
+bool Character::operator==(const Character& rhs) {
+    if (_hp == rhs._hp && _armor == rhs._armor && _damage == rhs._damage && _god_status == rhs._god_status
+        && _active_skill_status == rhs._active_skill_status && _passive_skill_status == rhs._passive_skill_status
+        && _type == rhs._type && _live_status == rhs._live_status) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+Character* Character::create_person(CharacterType type) {
+    switch (type) {
+    case Assassin: {
+        return new Character(100, 5, 25, ungod, unselected, unactive, Assassin, live);
+    }
+    case Knight: {
+        return new Character(150, 7, 15, ungod, unselected, unactive, Knight, live);
+    }
+    case Berserk: {
+        return new  Character(200, 1, 30, ungod, unselected, unactive, Berserk, live);
+    }
+    }
+}
+
+Character* Character::clone() const {
+    return new Character(_hp, _armor, _damage, _god_status, _active_skill_status, _passive_skill_status, _type, _live_status);
+}
+
+
+
+
+
+
 
 void Character::press_active_skill()
 {
@@ -114,28 +171,12 @@ float Character::damage_taken(float damage_given) {
 
     return damageFromOpponent;
 }
- Character::Character(float hp, float armor, float damage,
-    PersonGodStatus godStatus, ActiveSkillStatus activeSkillStatus, PassiveSkillStatus passiveSkillStatus,
-    CharacterType type, PersonLiveStatus liveStatus) {
-    _hp = hp;
-    _armor = armor;
-    _damage = damage;
-    _god_status = godStatus;
-    _active_skill_status = activeSkillStatus;
-    _passive_skill_status = passiveSkillStatus;
-    _type = type;
-    _live_status = liveStatus;
-}
- Character::Character() {
-    _hp = 100;
-    _armor = 5;
-    _damage = 15;
-    _god_status = ungod;
-    _active_skill_status = unselected;
-    _passive_skill_status = unactive;
-    _type = NonType;
-    _live_status = live;
-} 
+ 
+
+
+
+
+
 
 
 

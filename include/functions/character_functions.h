@@ -35,12 +35,15 @@ namespace rpg {
             PersonGodStatus godStatus, ActiveSkillStatus activeSkillStatus, PassiveSkillStatus passiveSkillStatus,
             CharacterType type, PersonLiveStatus liveStatus);
         Character();
-        
-       /* void AssassinSkill();
-        void KnightSkill();
-        void BerserkSkill();*/
-        void press_active_skill();
 
+        Character* clone() const;
+        Character* create_person(CharacterType type);
+
+        bool operator==(const Character& rhs);
+
+       
+
+        void press_active_skill();
         float hp_calculation(float damageFromOpponent);
         void character_parametr_calculation();
         void passive_skill_chance();
@@ -87,21 +90,23 @@ namespace rpg {
 
     class CharacterList {
     public:
+        void swap(CharacterList& OtherList);
         
-        int size();
         CharacterList();
-        Character operator[](const int index) const;
-        void add(Character a);
+        ~CharacterList();
+        CharacterList(const CharacterList& OtherList);
+        Character* operator[](const int index) const;
+
+        int size();
+
+        void add(Character* person);
         int index_of_max_damage();
-        void insert(Character a, int index);
+        void insert(Character* a, int index);
         void delete_person_from_list(int index);
+        
     private:
-        int _countOfPerson = 0;
-        static const int CAPACITY = 10;
-        Character _ñharacter_array[CAPACITY];
-       // int _size;
-        
-        
+        int _size = 0;
+        Character** _character_array;   
     };
 }
 
