@@ -12,6 +12,34 @@ CharacterList::CharacterList() {
     _character_array = new Character * [0];
     _size = 0;
 }
+CharacterList::~CharacterList() {
+    for (int i = 0; i < _size; ++i) {
+        delete _character_array[i];
+    }
+    delete[] _character_array;
+}
+
+
+void CharacterList::swap(CharacterList& OtherList) {
+    std::swap(this->_character_array, OtherList._character_array);
+    std::swap(this->_size, OtherList._size);
+}
+
+
+CharacterList::CharacterList(const CharacterList& OtherList) :
+    _character_array(new Character* [OtherList._size]),
+    _size(OtherList._size)
+{
+    for (int i = 0; i < _size; ++i) {
+        _character_array[i] = OtherList[i]->clone();
+    }
+}
+void CharacterList::print() {
+    for (int i = 0; i < _size; i++) {
+        std::cout<<"Index: " << i;
+        (*_character_array[i]).print();
+    }
+}
 void CharacterList::delete_person_from_list(int index) {
     auto copy = new Character* [_size - 1];
     for (int i = 0; i < _size - 1; ++i) {
@@ -74,25 +102,3 @@ int CharacterList::index_of_max_damage() {
     return index;
 }
 
-CharacterList::~CharacterList() {
-    for (int i = 0; i < _size; ++i) {
-        delete _character_array[i];
-    }
-    delete[] _character_array;
-}
-
-
-void CharacterList::swap(CharacterList& OtherList) {
-    std::swap(this->_character_array, OtherList._character_array);
-    std::swap(this->_size, OtherList._size);
-}
-
-
-CharacterList::CharacterList(const CharacterList& OtherList) :
-    _character_array(new Character*[OtherList._size]),
-    _size(OtherList._size)
-{
-    for (int i = 0; i < _size; ++i) {
-        _character_array[i] = OtherList[i]->clone();
-    }
-}

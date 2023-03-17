@@ -1,5 +1,6 @@
 #include <functions/character_functions.h>
 #include <ctime>   
+#include <iostream>
 #include <stdexcept>
 
 using namespace rpg;
@@ -58,6 +59,9 @@ Character* Character::clone() const {
     return new Character(_hp, _armor, _damage, _god_status, _active_skill_status, _passive_skill_status, _type, _live_status);
 }
 
+void Character::print() {
+    std::cout << "  Type: " << _type << "\tHP: " << _hp << "\tArmor: " << _armor << "\tDamage: " << _damage<<"\n";
+}
 
 
 

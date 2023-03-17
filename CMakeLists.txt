@@ -34,6 +34,9 @@ FetchContent_MakeAvailable(googletest)
 add_executable(functions_tests 
 "tests/character_tests.cc"
 "tests/character_list_tests.cc"
-
 )
+#Подключение консольного приложения
+add_executable(RPG "console/RPG.cc")
+target_link_libraries(RPG functions)
+
 target_link_libraries(functions_tests functions GTest::gtest_main)

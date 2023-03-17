@@ -3,8 +3,8 @@ using namespace std;
 namespace rpg {
     enum CharacterType
     {
-        Knight,
         Assassin,
+        Knight,
         Berserk,
         NonType
 
@@ -41,7 +41,7 @@ namespace rpg {
 
         bool operator==(const Character& rhs);
 
-       
+        void print();
 
         void press_active_skill();
         float hp_calculation(float damageFromOpponent);
@@ -98,6 +98,8 @@ namespace rpg {
         Character* operator[](const int index) const;
 
         int size();
+
+        void print();
 
         void add(Character* person);
         int index_of_max_damage();
