@@ -47,10 +47,10 @@ Character* Character::create_person(CharacterType type) {
         return new Character(100, 5, 25, ungod, unselected, unactive, Assassin, live);
     }
     case Knight: {
-        return new Character(150, 7, 15, ungod, unselected, unactive, Knight, live);
+        return new Character(150, 7, 30, ungod, unselected, unactive, Knight, live);
     }
     case Berserk: {
-        return new  Character(200, 1, 30, ungod, unselected, unactive, Berserk, live);
+        return new  Character(200, 1, 35, ungod, unselected, unactive, Berserk, live);
     }
     }
 }
@@ -78,8 +78,8 @@ void Character::character_parametr_calculation() {
     case Knight:
         if (_active_skill_status == selected)
         {
-            _armor += 5;
-            _damage -= 10;
+            _armor += 1;
+            _damage -= 5;
         }
         break;
     case Assassin:
@@ -101,7 +101,10 @@ void Character::character_parametr_calculation() {
 
 float Character::hp_calculation(float damageFromOpponent)
 {
-    _hp -= damageFromOpponent;
+    if (damageFromOpponent >= 0) {
+        _hp -= damageFromOpponent;
+        return _hp;
+    }
     return _hp;
 
 }
