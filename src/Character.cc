@@ -79,7 +79,7 @@ void Character::character_parametr_calculation() {
         if (_active_skill_status == selected)
         {
             _armor += 1;
-            _damage -= 5;
+            _damage -= 3;
         }
         break;
     case Assassin:
@@ -92,7 +92,7 @@ void Character::character_parametr_calculation() {
         if (_active_skill_status == selected)
         {
             _damage += 10;
-            _triple_damage_chance_berserk += 0.2;
+            _triple_damage_chance_berserk += 0.1;
             _armor -= 10;
         }
         break;
@@ -108,7 +108,6 @@ float Character::hp_calculation(float damageFromOpponent)
     return _hp;
 
 }
-
 float Character::damage_given() {
     float totalDamage = _damage;
     float damageToOpponent = _damage;
@@ -160,6 +159,9 @@ void Character::passive_skill_chance() {
 }
 float Character::damage_taken(float damage_given) {
     passive_skill_chance();
+    if (damage_given == 0) {
+        return 0;
+    }
     float damageFromOpponent = damage_given - _armor;
     switch (_type) {
     case Knight:
@@ -175,8 +177,12 @@ float Character::damage_taken(float damage_given) {
     case Berserk:
         break;
     }
-
-    return damageFromOpponent;
+    if (damageFromOpponent > 0) {
+        return damageFromOpponent;
+    }
+    else {
+        return 0;
+    }
 }
  
 

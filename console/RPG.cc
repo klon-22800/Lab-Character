@@ -33,7 +33,44 @@ void parametrs_null(Character& a, Character& b) {
 	b.set_god_status(ungod);
 }
 
+void active_skill_print(int type){
+	switch (type) {
+	case 0: {
+		cout << "Will take 0 damage\n";
+	}
+		  break;
+	case 1: {
+		cout << "Increases armor by 1, reduces damage by 3\n";
+
+	}
+		  break;
+	case 2: {
+		cout << "Increases damage by 10, increases triple damage chance by 10 %, reduces armor by 10\n";
+	}
+		  break;
+	}
+}
+
+void passive_skill_print(int type) {
+	switch (type) {
+	case 0: {
+		cout << "Increases damage X2\n";
+	}
+		  break;
+	case 1: {
+		cout << "Reduce damage /2\\n";
+
+	}
+		  break;
+	case 2: {
+		cout << "Increases damage X3\n";
+	}
+		  break;
+	}
+}
+
 void Battle(Character& playerA, Character& playerB) {
+	int step = 0;
 	
 	bool playerA_attack = false;
 	bool playerB_attack = false;
@@ -47,7 +84,14 @@ void Battle(Character& playerA, Character& playerB) {
 	float playerA_present_health = playerA.get_hp();
 	float playerB_present_health = playerB.get_hp();
 
+	int typeA = playerA.get_type();
+	int typeB = playerB.get_type();
+
+	cout << "HP 1 player" << playerA_present_health << "\n";
+	cout << "HP 2 player" << playerB_present_health << "\n\n";
+
 	while (playerA.get_hp() > 0 && playerB.get_hp() > 0) {
+		cout << "Step: " << step << "\n";
 		
 		parametrs_null(playerA, playerB);
 		playerA_attack = false;
@@ -65,10 +109,12 @@ void Battle(Character& playerA, Character& playerB) {
 		if (playerA_attack == false) {
 			playerA.press_active_skill();
 			cout << "Player A choose the skill" << "\n";
+			active_skill_print(typeA);
 		}
 		if (playerB_attack == false) {
 			playerB.press_active_skill();
-			cout << "Player B choose the skill  " << "\n\n";
+			cout << "Player B choose the skill  " << "\n";
+			active_skill_print(typeB);
 		}
 		
 		
@@ -86,14 +132,27 @@ void Battle(Character& playerA, Character& playerB) {
 		}
 
 		playerA_damage_take = playerA.damage_taken(playerB_damage);
+		cout << "Player A take: " << playerA_damage_take << " damage\n";
 		playerB_damage_take = playerB.damage_taken(playerA_damage);
+		cout << "Player B take: " << playerB_damage_take << " damage\n";
 		
 		playerA_present_health = playerA.hp_calculation(playerA_damage_take);
 		playerB_present_health = playerB.hp_calculation(playerB_damage_take);
 
 
 		cout <<"HP 1 player" << playerA_present_health << "\n";
-		cout << "HP 2 player" << playerB_present_health << "\n\n";
+		cout << "HP 2 player" << playerB_present_health << "\n\n\n";
+		step++;
+	}
+
+	if (playerA_present_health > playerB_present_health) {
+		cout << "PLAYER A WIN!!!!\n";
+	}
+	else if (playerA_present_health < playerB_present_health) {
+		cout << "PLAYER B WIN!!!!\n";
+	}
+	else if (playerA_present_health == playerB_present_health) {
+		cout << "DRAW\n";
 	}
 }
 
@@ -105,7 +164,7 @@ int main() {
 	CharacterList list;
 	Character person;
 	while (choice != 0) {
-		cout << "1 - Add element by index\n2 - Delete element by index\n3 - Print all eleement\n4 - Print person with max damage\n5 - Start the fight";
+		cout << "1 - Add element\n2 - Insert element by index\n3 - Delete element by index\n4 - Print all eleement\n5 - Print person with max damage\n6 - Start the fight";
 		cin >> choice;
 		system("cls");
 		switch (choice) {
@@ -113,6 +172,10 @@ int main() {
 			int type = 0;
 			cout << "Choose person\n0 - Assassin\n1 - Knight\n2 - Berserk";
 			cin >> type;
+			if (type < 0 || type>2) {
+				cout << "[{INCORRECT TYPE}]\n";
+				break;
+			}
 			switch (type) {
 			case 0: {
 				list.add(person.create_person(Assassin));
@@ -133,11 +196,46 @@ int main() {
 		}
 			  break;
 		case 2: {
+			int type = 0;
+			int index = -1;
+			cout << "Choose person\n0 - Assassin\n1 - Knight\n2 - Berserk";
+			cin >> type;
+			if (type < 0 || type>2) {
+				cout << "[{INCORRECT TYPE}]\n";
+				break;
+			}
+			cout << "Choose index: ";
+			cin >> index;
+			if ((index<0 || index> list.size()) || (type<0 || type >2)) {
+				cout << "[{INCORRECT INDEX}]\n";
+				break;
+			}
+			switch (type) {
+			case 0: {
+				list.insert(person.create_person(Assassin), index);
+				list.print();
+			}
+				  break;
+			case 1: {
+				list.insert(person.create_person(Knight), index);
+				list.print();
+			}
+				  break;
+			case 2: {
+				list.insert(person.create_person(Berserk), index);
+				list.print();
+			}
+				  break;
+			}
+
+		}
+			  break;
+		case 3: {
 			int index_delete = -1;
 			cout << "Enter index for delete";
 			cin >> index_delete;
 			if (index_delete < 0 || index_delete >= list.size()) {
-				cout << "\n\t[{UNCORRECT INDEX}]\n";
+				cout << "\n\t[{INCORRECT INDEX}]\n";
 			}
 			else {
 				list.delete_person_from_list(index_delete);
@@ -145,11 +243,11 @@ int main() {
 			list.print();
 		}
 			  break;
-		case 3: {
+		case 4: {
 			list.print();
 		}
 			  break;
-		case 4: {
+		case 5: {
 			if (list.size() <= 0) {
 				cout << "\n\t[{LIST IS VOID}]\n\n";
 			}
@@ -161,18 +259,21 @@ int main() {
 			
 		}
 			  break;
-		case 5: {
+		case 6: {
 			int indexA = -1;
 			int indexB = -1;
 			cout << "Choose first person from the list";
 			cin >> indexA;
 			cout << "Choose second person from the list";
 			cin >> indexB;
-			Battle(*list[indexA], *list[indexB]);
-
+			if ((indexA >= 0 && indexA < list.size()) && (indexA >= 0 && indexA < list.size())) {
+				Battle(*list[indexA], *list[indexB]);
+			}
+			else {
+				cout << "[{INCORRECT INDEX}]\n";
+			}
 		}
 			  break;
-
 		}
 	}
 }
