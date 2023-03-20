@@ -87,8 +87,8 @@ void Battle(Character& playerA, Character& playerB) {
 	int typeA = playerA.get_type();
 	int typeB = playerB.get_type();
 
-	cout << "HP 1 player" << playerA_present_health << "\n";
-	cout << "HP 2 player" << playerB_present_health << "\n\n";
+	cout << "HP 1 player " << playerA_present_health << "\n";
+	cout << "HP 2 player " << playerB_present_health << "\n\n";
 
 	while (playerA.get_hp() > 0 && playerB.get_hp() > 0) {
 		cout << "Step: " << step << "\n";
@@ -140,8 +140,8 @@ void Battle(Character& playerA, Character& playerB) {
 		playerB_present_health = playerB.hp_calculation(playerB_damage_take);
 
 
-		cout <<"HP 1 player" << playerA_present_health << "\n";
-		cout << "HP 2 player" << playerB_present_health << "\n\n\n";
+		cout <<"HP 1 player " << playerA_present_health << "\n";
+		cout << "HP 2 player " << playerB_present_health << "\n\n\n";
 		step++;
 	}
 
@@ -164,7 +164,7 @@ int main() {
 	CharacterList list;
 	Character person;
 	while (choice != 0) {
-		cout << "1 - Add element\n2 - Insert element by index\n3 - Delete element by index\n4 - Print all eleement\n5 - Print person with max damage\n6 - Start the fight";
+		cout << "1 - Add element\n2 - Insert element by index\n3 - Delete element by index\n4 - Print all eleement\n5 - Print person with max damage\n6 - Start the fight\n7 - Close\n";
 		cin >> choice;
 		system("cls");
 		switch (choice) {
@@ -262,18 +262,26 @@ int main() {
 		case 6: {
 			int indexA = -1;
 			int indexB = -1;
-			cout << "Choose first person from the list";
+			cout << "Choose first person from the list: ";
 			cin >> indexA;
-			cout << "Choose second person from the list";
+			cout << "Choose second person from the list: ";
 			cin >> indexB;
-			if ((indexA >= 0 && indexA < list.size()) && (indexA >= 0 && indexA < list.size())) {
-				Battle(*list[indexA], *list[indexB]);
+			if (indexA == indexB) {
+				cout << "[{INCORRECT INDEX}]\n";
 			}
 			else {
-				cout << "[{INCORRECT INDEX}]\n";
+				if ((indexA >= 0 && indexA < list.size()) && (indexB >= 0 && indexB < list.size())) {
+					Battle(*list[indexA], *list[indexB]);
+				}
+				else {
+					cout << "[{INCORRECT INDEX}]\n";
+				}
 			}
 		}
 			  break;
+		case 7:
+			return 0;
 		}
+		
 	}
 }
