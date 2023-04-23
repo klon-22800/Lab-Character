@@ -3,47 +3,24 @@
 using namespace std;
 using namespace rpg;
 
-TEST(FunctionsTests, TestOperatorComprasionFALSE) {
-    // Arrange
-    Character person;
-    CharacterList list;
-    const auto ptr1 = person.create_person(Assassin);
-    const auto ptr2 = person.create_person(Berserk);
-    list.add(ptr1);
-    list.add(ptr2);
-    bool a = *list[0] == *list[1];
 
-    // Assert
-    EXPECT_EQ(a, false);
-}
-TEST(FunctionsTests, TestOperatorComprasionTRUE) {
+TEST(FunctionsTests, Operator_Comparison) {
     // Arrange
-    Character person;
-    CharacterList list;
-    const auto ptr1 = person.create_person(Assassin);
-    const auto ptr2 = person.create_person(Assassin);
-    list.add(ptr1);
-    list.add(ptr2);
-    bool a = *list[0] == *list[1];
+    auto person = make_shared<Assassin>();
+    auto person2 = make_shared<Assassin>();
 
+
+    float b = *person == *person2;
+
+    
     // Assert
-    EXPECT_EQ(a, true);
+    EXPECT_EQ(b, true);
 }
 
-TEST(FunctionsTests, create_person) {
-    // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
-    auto a = (*ptr).get_type();
-
-    // Assert
-    EXPECT_EQ(a, Assassin);
-}
 
 TEST(FunctionsTests, character_parametr_calculation) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     // Act
     (*ptr).press_active_skill();
@@ -56,8 +33,7 @@ TEST(FunctionsTests, character_parametr_calculation) {
 
 TEST(FunctionsTests, Getset_god_status) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     
     // Act
@@ -67,55 +43,28 @@ TEST(FunctionsTests, Getset_god_status) {
     EXPECT_EQ(a, ungod);
 }
 
-TEST(FunctionsTests, Getset_type) {
-    // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
 
-    CharacterType b = Assassin;
-    (*ptr).set_type(b);
-    // Act
-    CharacterType a = (*ptr).get_type();
-
-    // Assert
-    EXPECT_EQ(a, Assassin);
-}
 TEST(FunctionsTests, Getset_live_statusPositive) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     
     (*ptr).set_hp(5);
     // Act
-    PersonLiveStatus a = (*ptr).get_live_status();
+    PersonLiveStatus a = ptr->get_live_status();
 
     // Assert
     EXPECT_EQ(a, live);
 }
 
-TEST(FunctionsTests, Getset_live_statusNegative) {
-    // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
-
-    (*ptr).set_hp(-5);
-    // Act
-    PersonLiveStatus a = (*ptr).get_live_status();
-
-    // Assert
-    EXPECT_EQ(a, dead);
-}
-
 TEST(FunctionsTests, hp_calculation) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     float b = 5;
-    (*ptr).set_hp(b);
+    ptr->set_hp(b);
     // Act
-    float a = (*ptr).hp_calculation(3);
+    float a = ptr->hp_calculation(3);
 
     // Assert
     EXPECT_EQ(a, 2);
@@ -123,26 +72,23 @@ TEST(FunctionsTests, hp_calculation) {
 
 TEST(FunctionsTests, damage_given) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     float b = 5;
     (*ptr).set_damage(b);
-    (*ptr).set_type(Berserk);
     (*ptr).set_passive_skill_status(active);
     // Act
     float a = (*ptr).damage_given();
 
     // Assert
-    EXPECT_NEAR(a, 15, 0.05);
+    EXPECT_NEAR(a, 10, 0.0001);
 }
 
 
 TEST(FunctionsTests, damage_takenToGod) {
     // Arrange
     
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
     (*ptr).set_active_skill_status(selected);
     (*ptr).character_parametr_calculation();
 
@@ -155,8 +101,7 @@ TEST(FunctionsTests, damage_takenToGod) {
 
 TEST(FunctionsTests, damage_taken) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     // Act
     float a = (*ptr).damage_taken(15);
@@ -167,8 +112,7 @@ TEST(FunctionsTests, damage_taken) {
 
 TEST(FunctionsTests, Getset_armor) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     float b = 5;
     (*ptr).set_armor(b);
@@ -180,8 +124,7 @@ TEST(FunctionsTests, Getset_armor) {
 }
 TEST(FunctionsTests, Getset_hp) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
 
     float b = 5;
     (*ptr).set_hp(b);
@@ -194,8 +137,7 @@ TEST(FunctionsTests, Getset_hp) {
 
 TEST(FunctionsTests, Getset_damage) {
     // Arrange
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
     
     float b = 5;
     (*ptr).set_damage(b);

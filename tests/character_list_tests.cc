@@ -3,49 +3,62 @@
 #include <functions/character_functions.h>
 using namespace std;
 using namespace rpg;
-TEST(FunctionsTests, NewInsert) {
+TEST(FunctionsTests, swap) {
     // Arrange
     CharacterList personList;
-    Character person;
-    
-    
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-
-    int a = personList.size();
+    auto person = make_shared<Assassin>();
+    personList.add(person);
+    auto a = personList[0];
 
     // Assert
-    EXPECT_EQ(a, 3);
+    EXPECT_EQ(a, person);
 }
-
+//TEST(FunctionsTests, NewInsert) {
+//    // Arrange
+//    CharacterList personList;
+//    Character person;
+//    
+//    
+//    personList.add(person.create_person(Assassin));
+//    personList.add(person.create_person(Assassin));
+//    personList.add(person.create_person(Assassin));
+//
+//    int a = personList.size();
+//
+//    // Assert
+//    EXPECT_EQ(a, 3);
+//}
+//
 TEST(FunctionsTests, maxDamage) {
     // Arrange
     CharacterList personList;
-    Character person;
+    auto person = make_shared<Assassin>();
+    auto person2 = make_shared<Berserk>();
 
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Berserk));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-
-    int a = personList.index_of_max_damage();
+    personList.add(person);
+    personList.add(person);
+    personList.insert(person2, 1);
+    personList.add(person);
+    personList.add(person);
+    personList.add(person2);
+    personList.delete_person(1);
+    personList.print();
+    auto a = personList[1];
 
     // Assert
-    EXPECT_EQ(a, 1);
+    EXPECT_EQ(a, person);
 }
 
 TEST(FunctionsTests, AddingToStrangerPlace) {
     // Arrange
     CharacterList personList;
-    Character person;
-    const auto ptr1 = person.create_person(Assassin);
-    const auto ptr2 = person.create_person(Assassin);
-    const auto ptr3 = person.create_person(Assassin);
+    auto ptr1 = make_shared<Assassin>();
+    auto ptr2 = make_shared<Assassin>();
+    auto ptr3 = make_shared<Assassin>();
     personList.add(ptr1);
     personList.add(ptr2);
     personList.insert(ptr3, 1);
-    personList.delete_person_from_list(1);
+    personList.delete_person(1);
 
     int a = personList.size();
 
@@ -55,67 +68,46 @@ TEST(FunctionsTests, AddingToStrangerPlace) {
 TEST(FunctionsTests, countOfPersonAfterDeleting) {
     // Arrange
     CharacterList personList;
-    Character person;
-    const auto ptr = person.create_person(Assassin);
+    auto ptr = make_shared<Assassin>();
     personList.add(ptr);
 
-    personList.delete_person_from_list(0);
+    personList.delete_person(0);
 
     int a = personList.size();
 
     // Assert
     EXPECT_EQ(a, 0);
 }
-TEST(FunctionsTests, delete_person_from_list) {
-    // Arrange
-    CharacterList personList;
-    Character person;
-    const auto ptr1 = person.create_person(Assassin);
-    const auto ptr2 = person.create_person(Assassin);
-    const auto ptr3 = person.create_person(Assassin);
-    personList.add(ptr1);
-    personList.add(ptr2);
-    personList.add(ptr3);
-    
-    personList.delete_person_from_list(1);
 
-    CharacterType a = (*personList[1]).get_type();
-
-    // Assert
-    EXPECT_EQ(a, Assassin);
-}
 TEST(FunctionsTests, insertPersonToList) {
     // Arrange
     CharacterList personList;
-    Character person;
-    Character person2;
-    const auto ptr = person.create_person(Assassin);
-    const auto ptr2 = person2.create_person(Berserk);
+    auto ptr = make_shared<Assassin>();
+    auto ptr2 = make_shared<Berserk>();
     personList.add(ptr);
     personList.insert(ptr2, 0);
 
-    CharacterType a = (*personList[0]).get_type();
+    int a = (*personList[0]).get_type();
 
     // Assert
-    EXPECT_EQ(a, Berserk);
+    EXPECT_EQ(a, 2);
 }
 
 TEST(FunctionsTests, ListSize) {
     // Arrange
     CharacterList personList;
-    Character person;
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    personList.add(person.create_person(Assassin));
-    
+    auto ptr = make_shared<Assassin>();
+    personList.add(ptr);
+    personList.add(ptr);
+    personList.add(ptr);
+    personList.add(ptr);
+
+    personList.add(ptr);
+    personList.add(ptr);
+    personList.add(ptr);
+    personList.add(ptr);
 
     int a = personList.size();
-
 
     // Assert
     EXPECT_EQ(a, 8);

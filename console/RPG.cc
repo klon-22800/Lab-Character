@@ -162,7 +162,6 @@ void Battle(Character& playerA, Character& playerB) {
 int main() {
 	int choice = 1;
 	CharacterList list;
-	Character person;
 	while (choice != 0) {
 		cout << "1 - Add element\n2 - Insert element by index\n3 - Delete element by index\n4 - Print all eleement\n5 - Print person with max damage\n6 - Start the fight\n7 - Close\n";
 		cin >> choice;
@@ -178,17 +177,17 @@ int main() {
 			}
 			switch (type) {
 			case 0: {
-				list.add(person.create_person(Assassin));
+				list.add(make_shared<Assassin>());
 				list.print();
 			}
 				  break;
 			case 1: {
-				list.add(person.create_person(Knight));
+				list.add(make_shared<Knight>());
 				list.print();
 			}
 				  break;
 			case 2: {
-				list.add(person.create_person(Berserk));
+				list.add(make_shared<Berserk>());
 				list.print();
 			}
 				  break;
@@ -212,17 +211,17 @@ int main() {
 			}
 			switch (type) {
 			case 0: {
-				list.insert(person.create_person(Assassin), index);
+				list.insert(make_shared<Assassin>(), index);
 				list.print();
 			}
 				  break;
 			case 1: {
-				list.insert(person.create_person(Knight), index);
+				list.insert(make_shared<Knight>(), index);
 				list.print();
 			}
 				  break;
 			case 2: {
-				list.insert(person.create_person(Berserk), index);
+				list.insert(make_shared<Berserk>(), index);
 				list.print();
 			}
 				  break;
@@ -238,7 +237,7 @@ int main() {
 				cout << "\n\t[{INCORRECT INDEX}]\n";
 			}
 			else {
-				list.delete_person_from_list(index_delete);
+				list.delete_person(index_delete);
 			}
 			list.print();
 		}

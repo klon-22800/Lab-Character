@@ -7,93 +7,55 @@ using namespace rpg;
 using namespace std;
 
 
-
-CharacterList::CharacterList() {
-    _character_array = new Character * [0];
-    _size = 0;
-}
-CharacterList::~CharacterList() {
-    for (int i = 0; i < _size; ++i) {
-        delete _character_array[i];
-    }
-    delete[] _character_array;
+CharacterList& CharacterList::operator=(CharacterList rhs) {
+    swap(rhs);
+    return *this;
 }
 
-
-void CharacterList::swap(CharacterList& OtherList) {
+void CharacterList::swap(CharacterList& OtherList) noexcept  {
     std::swap(this->_character_array, OtherList._character_array);
-    std::swap(this->_size, OtherList._size);
+    
 }
-
-
-CharacterList::CharacterList(const CharacterList& OtherList) :
-    _character_array(new Character* [OtherList._size]),
-    _size(OtherList._size)
-{
-    for (int i = 0; i < _size; ++i) {
-        _character_array[i] = OtherList[i]->clone();
+CharacterList::CharacterList(const CharacterList& OtherList){
+    for (int i = 0; i < size(); ++i) {
+        _character_array.push_back(OtherList[i]->clone());
     }
 }
 void CharacterList::print() {
-    for (int i = 0; i < _size; i++) {
+    for (int i = 0; i < size(); i++) {
         std::cout<<"Index: " << i;
-        (*_character_array[i]).print();
+        _character_array[i]->print();
     }
 }
-void CharacterList::delete_person_from_list(int index) {
-    auto copy = new Character* [_size - 1];
-    for (int i = 0; i < _size - 1; ++i) {
-        if (index > i)
-            copy[i] = _character_array[i];
-        else
-            copy[i] = _character_array[i + 1];
-    }
-    delete[] _character_array;
-    _character_array = copy;
-    _size--;
+void CharacterList::delete_person(int index) {
+    auto iter = _character_array.cbegin();
+    _character_array.erase(iter + index);
 }
 
 int CharacterList::size() { 
 
-    return _size;
+    return _character_array.size();
 }
 
-void CharacterList::insert(Character* person, int index) {
-    auto copy = new Character* [_size + 1];
-    for (int i = 0; i < _size; i++) {
-        if (i < index)
-            copy[i] = _character_array[i];
-        else
-            copy[i + 1] = _character_array[i];
-    }
-    copy[index] = person;
-    delete[] _character_array;
-    _character_array = copy;
-    _size++;    
+void CharacterList::insert(CharacterPtr person, int index) {
+    auto iter = _character_array.cbegin();
+    _character_array.emplace(iter+index, person);    
 }
-Character* CharacterList::operator[](const int index) const {
-    if (index < 0 || _size <= index) {
+CharacterPtr CharacterList::operator[](const int index) const {
+    if (index < 0) {
         throw out_of_range("[CharacterList::operator[]] Index is out of range.");
     }
-
     return _character_array[index];
 }
-
-void CharacterList::add(Character* person) {
-    auto copy = new Character* [_size + 1];
-    for (int i = 0; i < _size; ++i) {
-        copy[i] = _character_array[i];
-    }   
-    copy[_size] = person;
-    delete[] _character_array;
-    _character_array = copy;
-    _size++;
+//
+void CharacterList::add(CharacterPtr person) {
+    _character_array.push_back(person);
 }
-
+//
 int CharacterList::index_of_max_damage() {
     int maxDamage = 0;
     int index = 0;
-    for (int i = 0; i < _size; ++i) {
+    for (int i = 0; i < size(); ++i) {
         if ((*_character_array[i]).get_damage() > maxDamage) {
             maxDamage = (*_character_array[i]).get_damage();
             index = i;
