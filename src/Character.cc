@@ -7,28 +7,7 @@ using namespace rpg;
 using namespace std;
 
 
-//Character::Character(float hp, float armor, float damage,
-//	PersonGodStatus godStatus, ActiveSkillStatus activeSkillStatus, PassiveSkillStatus passiveSkillStatus,
-//	CharacterType type, PersonLiveStatus liveStatus) {
-//	_hp = hp;
-//	_armor = armor;
-//	_damage = damage;
-//	_god_status = godStatus;
-//	_active_skill_status = activeSkillStatus;
-//	_passive_skill_status = passiveSkillStatus;
-//	_type = type;
-//	_live_status = liveStatus;
-//}
-//Character::Character() {
-//	_hp = 0;
-//	_armor = 0;
-//	_damage = 0;
-//	_god_status = ungod;
-//	_active_skill_status = unselected;
-//	_passive_skill_status = unactive;
-//	_type = NonType;
-//	_live_status = dead;
-//}
+
 
 bool Character::operator==(const Character& rhs) {
 	if (_hp == rhs._hp && _armor == rhs._armor && _damage == rhs._damage
@@ -48,20 +27,6 @@ ostream& rpg::operator<<(ostream& stream, Character& person) {
 }
 
 
-//Character* Character::create_person(CharacterType type) {
-//	switch (type) {
-//	case Assassin: {
-//		return new Character(100, 5, 25, ungod, unselected, unactive, Assassin, live);
-//	}
-//	case Knight: {
-//		return new Character(150, 7, 30, ungod, unselected, unactive, Knight, live);
-//	}
-//	case Berserk: {
-//		return new  Character(200, 1, 35, ungod, unselected, unactive, Berserk, live);
-//	}
-//	}
-//}
-//
 
 void Assassin::print() const {
 	std::cout << "  Type: " << "Assassin" << "\tHP: " << _hp << "\tArmor: " << _armor << "\tDamage: " << _damage << "\n";
@@ -109,31 +74,6 @@ void Knight::character_parametr_calculation() {
 		_damage -= 3;;
 	}
 }
-//void Character::character_parametr_calculation() {
-//    switch (_type) {
-//    case Knight:
-//        if (_active_skill_status == selected)
-//        {
-//            _armor += 1;
-//            _damage -= 3;
-//        }
-//        break;
-//    case Assassin:
-//        if (_active_skill_status == selected)
-//        {
-//            _god_status = god;
-//        }
-//        break;
-//    case Berserk:
-		/*if (_active_skill_status == selected)
-		{
-			_damage += 10;
-			_triple_damage_chance_berserk += 0.1;
-			_armor -= 10;
-		}*/
-		//        break;
-		//    }
-		//}
 
 float Character::hp_calculation(float damageFromOpponent)
 {
@@ -169,28 +109,7 @@ float Knight::damage_given() {
 	return _damage;
 }
 
-//float Character::damage_given() {
-//    float totalDamage = _damage;
-//    float damageToOpponent = _damage;
-//    passive_skill_chance();
-//    switch (_type) {
-//    case Knight:
-//        break;
-//    case Assassin:
-       /* if (_passive_skill_status == active) {
-            totalDamage += _damage;
-        }
-        damageToOpponent = totalDamage;*/
-//        break;
-//    case Berserk:
-        /*if (_passive_skill_status == active) {
-            damageToOpponent = damageToOpponent * 3;
-        }
-        break;
-    }
-    return damageToOpponent;*/
-//}
-// 
+ 
 
 void Assassin::passive_skill_chance() {
 	srand(time(NULL));
@@ -217,33 +136,7 @@ void Knight::passive_skill_chance() {
 		_passive_skill_status = active;
 	}
 }
-//void Character::passive_skill_chance() {
-//    srand(time(NULL));
-//    int chance = rand() % 100 + 1;
-//    switch (_type)
-//    {
-//    case Knight:
-//        if (_reduce_damage_chance_knight > chance)
-//        {
-//            _passive_skill_status = active;
-//        }
-//        
-//        break;
-//    case Assassin:
-//        if (_double_attack_chance_assassin > chance)
-//        {
-//            _passive_skill_status = active;
-//        }
-//        break;
-//    case Berserk:
-//        if (_triple_damage_chance_berserk > chance)
-//        {
-//            _passive_skill_status = active;
-//        }
-//        break;
-//
-//    }
-//}
+
 
 float Assassin::damage_taken(float damage_given) {
 	passive_skill_chance();
@@ -291,33 +184,7 @@ float Berserk::damage_taken(float damage_given) {
 		return 0;
 	}
 }
-//float Character::damage_taken(float damage_given) {
-//    passive_skill_chance();
-//    if (damage_given == 0) {
-//        return 0;
-//    }
-//    float damageFromOpponent = damage_given - _armor;
-//    switch (_type) {
-//    case Knight:
-//        if (_passive_skill_status == active) {
-//            damageFromOpponent = damageFromOpponent / 2;
-//        }
-//        break;
-//    case Assassin:
-//        if (_god_status == god) {
-//            damageFromOpponent = 0;
-//        }
-//        break;
-//    case Berserk:
-//        break;
-//    }
-//    if (damageFromOpponent > 0) {
-//        return damageFromOpponent;
-//    }
-//    else {
-//        return 0;
-//    }
-//}
+
 void Character::set_passive_skill_status(PassiveSkillStatus a) {
     _passive_skill_status = a;
 }
@@ -325,13 +192,7 @@ void Character::set_passive_skill_status(PassiveSkillStatus a) {
 void Character::set_active_skill_status(ActiveSkillStatus a) {
     _active_skill_status = a;
 }
-//void Character::set_type(CharacterType a)
-//{
-//    _type = a;
-//}
-//CharacterType Character::get_type() {
-//    return _type;
-//}
+
 void Character::set_damage(float a)
 {
 

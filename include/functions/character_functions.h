@@ -33,10 +33,7 @@ namespace rpg {
     public:
        
         bool operator==(const Character& rhs);
-
-
-
-        //Готовые
+       
         virtual int get_type() = 0;
         virtual void print() const = 0;
         virtual unique_ptr<Character> clone() const = 0;
@@ -44,9 +41,8 @@ namespace rpg {
         virtual float damage_given() = 0;
         virtual float damage_taken(float damage_given) = 0;
         virtual void passive_skill_chance() = 0;
-        
-  
-        //Переписать
+
+
         
         void set_god_status(PersonGodStatus a);
         void press_active_skill();
@@ -68,15 +64,16 @@ namespace rpg {
         PersonLiveStatus get_live_status();
 
         
+        
+    protected:
         ActiveSkillStatus _active_skill_status;
         PassiveSkillStatus _passive_skill_status;
         PersonLiveStatus _live_status;
-        
+
         float _hp;
         float _armor;
         float _damage;
         PersonGodStatus _god_status = ungod;
-    protected:
         Character() = default;
 
     };
@@ -206,4 +203,3 @@ namespace rpg {
         std::vector<CharacterPtr> _character_array;  
     };
 }
-

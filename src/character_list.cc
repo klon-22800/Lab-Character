@@ -47,11 +47,11 @@ CharacterPtr CharacterList::operator[](const int index) const {
     }
     return _character_array[index];
 }
-//
+
 void CharacterList::add(CharacterPtr person) {
     _character_array.push_back(person);
 }
-//
+
 int CharacterList::index_of_max_damage() {
     int maxDamage = 0;
     int index = 0;
