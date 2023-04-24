@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iostream>;
 #include <memory>
 #include<vector>
@@ -64,17 +65,18 @@ namespace rpg {
         PersonLiveStatus get_live_status();
 
         
-        
-    protected:
-        ActiveSkillStatus _active_skill_status;
-        PassiveSkillStatus _passive_skill_status;
-        PersonLiveStatus _live_status;
+        ActiveSkillStatus _active_skill_status = unselected;
+        PassiveSkillStatus _passive_skill_status = unactive;
+        PersonLiveStatus _live_status = live;
 
-        float _hp;
-        float _armor;
-        float _damage;
+        float _hp = 0;
+        float _armor = 0;
+        float _damage = 0;
         PersonGodStatus _god_status = ungod;
+        ~Character() = default;
+    protected:
         Character() = default;
+        
 
     };
 
